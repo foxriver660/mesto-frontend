@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mesto</title>
+    <link rel="stylesheet" href="./pages/index.css" />
+    <link rel="icon" href="./image/favicon.ico" />
+  </head>
+  <body class="page">
+    <header class="header">
+      <img class="header__logo" src="./image/logo.svg" alt="Логотип Mesto" />
+    </header>
+    <main class="content">
+      <section class="profile">
+        <img class="profile__user-image" src="./image/image.jpg" alt="" />
+        <div class="profile__user-window">
+          <h1 class="profile__user-name">Жак-Ив Кусто</h1>
+          <button class="profile__eddit-button active-link"></button>
+          <h2 class="profile__user-status">Исследователь океана</h2>
+        </div>
+        <button class="profile__add-button active-link"></button>
+      </section>
+      <section
+        class="photo-grid"
+        aria-label="Блок с фотографиями и названиями мест"
+      >
+        <article class="photo-grid__item">
+          <img
+            class="photo-grid__image"
+            src="./image/karachaevo.jpg"
+            alt="Старый храм на горе"
+          />
+          <div class="photo-grid__root">
+            <h2 class="photo-grid__place-name">Карачаево-Черкессия</h2>
+            <div class="photo-grid__like-button"></div>
+          </div>
+        </article>
+        <article class="photo-grid__item">
+          <img
+            class="photo-grid__image"
+            src="./image/dombai.jpg"
+            alt="Гора в ретроспективе леса"
+          />
+          <div class="photo-grid__root">
+            <h2 class="photo-grid__place-name">Домбай</h2>
+            <div class="photo-grid__like-button"></div>
+          </div>
+        </article>
+        <article class="photo-grid__item">
+          <img
+            class="photo-grid__image"
+            src="./image/elbrus.jpg"
+            alt="Пустынные поля"
+          />
+          <div class="photo-grid__root">
+            <h2 class="photo-grid__place-name">Гора Эльбрус</h2>
+            <div class="photo-grid__like-button"></div>
+          </div>
+        </article>
+        <article class="photo-grid__item">
+          <img
+            class="photo-grid__image"
+            src="./image/baikal.jpg"
+            alt="скалистое побережье озера Байкал"
+          />
+          <div class="photo-grid__root">
+            <h2 class="photo-grid__place-name">Озеро Байкал</h2>
+            <div class="photo-grid__like-button"></div>
+          </div>
+        </article>
+        <article class="photo-grid__item">
+          <img
+            class="photo-grid__image"
+            src="./image/sahalin2.jpg"
+            alt="Маяк на скалистом мысе посреди моря"
+          />
+          <div class="photo-grid__root">
+            <h2 class="photo-grid__place-name">Сахалин</h2>
+            <div class="photo-grid__like-button"></div>
+          </div>
+        </article>
+        <article class="photo-grid__item">
+          <img
+            class="photo-grid__image"
+            src="./image/spitsbergen.jpg"
+            alt="Дома из красного бруса у подножья гор"
+          />
+          <div class="photo-grid__root">
+            <h2 class="photo-grid__place-name">Шпицберген</h2>
+            <div class="photo-grid__like-button"></div>
+          </div>
+        </article>
+      </section>
+    </main>
+    <footer class="footer">&copy; 2022 Mesto Russia</footer>
+    <section id="popup" class="popup popup_opened">
+      <div class="popup__container">
+        <form class="popup__content">
+          <button class="popup__close-button active-link"></button>
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <fieldset class="popup__input-container">
+            <input type="text" class="popup__input-name" value="Жак-Ив Кусто" />
+            <input
+              type="text"
+              class="popup__input-status"
+              value="Исследователь океана"
+            />
+          </fieldset>
+          <button class="popup__save-button">Сохранить</button>
+        </form>
+      </div>
+    </section>
+  </body>
+</html>

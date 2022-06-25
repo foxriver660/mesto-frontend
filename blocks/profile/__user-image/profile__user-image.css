@@ -1,0 +1,5 @@
+.profile__user-image {
+  max-width: 120px;
+  width: 100%;
+  border-radius: 50%;
+}
