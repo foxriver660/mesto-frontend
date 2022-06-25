@@ -1,12 +1,20 @@
 .photo-grid__like-button {
+  padding: 0;
+  margin: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 0;
+  border-radius: 0;
   width: 22px;
   height: 19px;
-  padding: 0;
-  background-image: url(../../../image/like-button.svg);
+    background-image: url(../../../image/like-button.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 22px 19px;
+  background-color: transparent;
   align-self: center;
+  cursor: pointer;
 }
 .photo-grid__like-button:hover {
   opacity: 0.5;

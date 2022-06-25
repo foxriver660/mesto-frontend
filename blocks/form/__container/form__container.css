@@ -1,0 +1,15 @@
+.form__container {
+  margin: 0;
+  padding: 54px 0 48px;
+  min-width: 358px;
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+@media screen and (max-width: 600px) {
+  .form__container {
+    min-width: 238px;
+    padding: 75px 0 45px;
+  }
+}
