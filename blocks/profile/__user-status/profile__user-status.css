@@ -5,7 +5,7 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
-  flex: 0 1 336px;
+  max-width:  336px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -14,7 +14,7 @@
   .profile__user-status {
     font-size: 14px;
     line-height: 17px;
-    flex: 0 1 60%;
+    max-width:  282px;
     text-align: center;
   }
 }

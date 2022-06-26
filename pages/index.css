@@ -7,7 +7,6 @@
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/profile/__add-button/profile__add-button.css);
 @import url(../blocks/profile/__eddit-button/profile__eddit-button.css);
-@import url(../blocks/profile/__user-data/profile__user-data.css);
 @import url(../blocks/profile/__user-image/profile__user-image.css);
 @import url(../blocks/profile/__user-name/profile__user-name.css);
 @import url(../blocks/profile/__user-status/profile__user-status.css);
