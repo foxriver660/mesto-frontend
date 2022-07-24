@@ -34,81 +34,29 @@
         class="photo-grid"
         aria-label="Блок с фотографиями и названиями мест"
       >
+      <template id="photo-template">
         <article class="photo-grid__item">
           <img
             class="photo-grid__image"
-            src="./image/karachaevo.jpg"
-            alt="Старый храм на горе"
+            src="https://miro.medium.com/max/700/1*3YvmAm2_2hRw23m1hQYmtw.jpeg"
+            alt="Загружаемое Изображение"
           />
           <div class="photo-grid__root">
-            <h2 class="photo-grid__place-name">Карачаево-Черкессия</h2>
+            <h2 class="photo-grid__place-name"></h2>
             <button
               type="button"
               class="photo-grid__like-button"
               aria-label="Добавить"
             ></button>
-          </div>
-        </article>
-        <article class="photo-grid__item">
-          <img
-            class="photo-grid__image"
-            src="./image/dombai.jpg"
-            alt="Гора в ретроспективе леса"
-          />
-          <div class="photo-grid__root">
-            <h2 class="photo-grid__place-name">Домбай</h2>
             <button
               type="button"
-              class="photo-grid__like-button"
-              aria-label="Избранное"
+              class="photo-grid__delete-button active-link"
+              aria-label="удалить"
             ></button>
           </div>
         </article>
-        <article class="photo-grid__item">
-          <img
-            class="photo-grid__image"
-            src="./image/elbrus.jpg"
-            alt="Пустынные поля"
-          />
-          <div class="photo-grid__root">
-            <h2 class="photo-grid__place-name">Гора Эльбрус</h2>
-            <button type="button" class="photo-grid__like-button"></button>
-          </div>
-        </article>
-        <article class="photo-grid__item">
-          <img
-            class="photo-grid__image"
-            src="./image/baikal.jpg"
-            alt="скалистое побережье озера Байкал"
-          />
-          <div class="photo-grid__root">
-            <h2 class="photo-grid__place-name">Озеро Байкал</h2>
-            <button type="button" class="photo-grid__like-button"></button>
-          </div>
-        </article>
-        <article class="photo-grid__item">
-          <img
-            class="photo-grid__image"
-            src="./image/sahalin2.jpg"
-            alt="Маяк на скалистом мысе посреди моря"
-          />
-          <div class="photo-grid__root">
-            <h2 class="photo-grid__place-name">Сахалин</h2>
-            <button type="button" class="photo-grid__like-button"></button>
-          </div>
-        </article>
-        <article class="photo-grid__item">
-          <img
-            class="photo-grid__image"
-            src="./image/spitsbergen.jpg"
-            alt="Дома из красного бруса у подножья гор"
-          />
-          <div class="photo-grid__root">
-            <h2 class="photo-grid__place-name">Шпицберген</h2>
-            <button type="button" class="photo-grid__like-button"></button>
-          </div>
-        </article>
-      </section>
+      </template>
+            </section>
     </main>
     <footer class="footer">
       <p class="footer__author">&copy; 2022 Mesto Russia</p>
@@ -140,5 +88,46 @@
         </form>
       </div>
     </div>
+       <div class="popup">
+      <div class="popup__container">
+        <button
+          type="button"
+          class="popup__close-button active-link"
+          aria-label="Закрыть"
+        ></button>
+        <form name="user-profile" class="form">
+          <h2 class="form__title">Новое место</h2>
+          <fieldset class="form__container">
+            <input
+              name="user-place"
+              type="text"
+              class="form__item form__item_el_user-place"
+              placeholder="Название"
+              value=""
+            />
+            <input
+              name="user-place-url"
+              type="url"
+              class="form__item form__item_el_user-place-url"
+              placeholder="Ссылка на картинку"
+              value=""
+            />
+          </fieldset>
+          <button type="submit" class="form__button">Сохранить</button>
+        </form>
+      </div>
+    </div>
+        <div class="popup">
+      <div class="popup__image-container">
+        <img class="photo-grid__image_popup" src="https://miro.medium.com/max/700/1*3YvmAm2_2hRw23m1hQYmtw.jpeg" alt="Загружаемое изображение">
+        <h2 class="photo-grid__place-name_popup">Тест</h2>
+        <button
+          type="button"
+          class="popup__close-button active-link"
+          aria-label="Закрыть"
+        ></button>
+      </div>
+    </div>
+    <script src="./index.js"></script>
   </body>
 </html>
