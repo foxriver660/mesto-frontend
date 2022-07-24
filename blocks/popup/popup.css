@@ -1,5 +1,6 @@
 .popup {
   padding: 0 ;
+ 
   position: fixed;
   top: 0;
   bottom: 0;
@@ -9,7 +10,11 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
-  display: none;
-  min-height: 100vh;
-     
-}
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all .5s ease-in;
+    min-height: 100vh;
+     }

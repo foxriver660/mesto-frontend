@@ -1,7 +1,8 @@
 .photo-grid__image {
-  min-width: 100%;
-  min-height: 282px;
+  width: 282px;
+  height: 282px;
   padding: 0;
   margin: 0;
   object-fit: cover;
+  cursor: zoom-in;
 }
