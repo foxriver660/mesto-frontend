@@ -1,34 +1,21 @@
-const popup = document.querySelectorAll(".popup");
-const popupProfile = document.querySelector(".profile__eddit-button");
-const popupAddCard = document.querySelector(".profile__add-button");
-const popupCloseBtn = document.querySelectorAll(".popup__close-button");
-const popupContainer = document.querySelectorAll(".popup__container");
-
-const formElement = document.querySelectorAll(".form");
+const profilePopup = document.querySelector(".profile-popup");
+const addPlacePopup = document.querySelector(".add-place-popup");
+const OpenImagePopup = document.querySelector(".open-image-popup");
+const ProfileBtn = document.querySelector(".profile__eddit-button");
+const AddCardBtn = document.querySelector(".profile__add-button");
+const CloseBtns = document.querySelectorAll(".popup__close-button");
+const formProfile = document.querySelector(".form-profile");
+const userName = document.querySelector(".profile__user-name");
+const userStatus = document.querySelector(".profile__user-status");
+const formPlace = document.querySelector(".form-place");
 const nameInput = document.querySelector(".form__item_el_user-name");
 const jobInput = document.querySelector(".form__item_el_user-status");
-
-const togglePopup = function (index) {
-  popup[index].classList.toggle("popup_opened");
-};
-popupProfile.addEventListener("click", () => togglePopup(0));
-popupAddCard.addEventListener("click", () => togglePopup(1));
-
-const popupClose = function (index) {
-  popupCloseBtn[index].addEventListener("click", () => togglePopup(index));
-};
-popupClose(0);
-popupClose(1);
-popupClose(2);
-
-const formSubmitHandler = function (evt) {
-  evt.preventDefault();
-  document.querySelector(".profile__user-name").textContent = nameInput.value;
-  document.querySelector(".profile__user-status").textContent = jobInput.value;
-  togglePopup(0);
-};
-formElement[0].addEventListener("submit", formSubmitHandler);
-
+const placeInput = document.querySelector(".form__item_el_user-place");
+const placeUrlInput = document.querySelector(".form__item_el_user-place-url");
+const photoTemplate = document.querySelector("#photo-template").content;
+const photoContainer = document.querySelector(".photo-grid");
+const imagePopup = document.querySelector(".photo-grid__image_popup");
+const placeNamePopup = document.querySelector(".photo-grid__place-name_popup");
 const initialCards = [
   {
     name: "Архыз",
@@ -57,58 +44,67 @@ const initialCards = [
   },
 ];
 
-const photoTemplate = document.querySelector("#photo-template").content;
-const photoContainer = document.querySelector(".photo-grid");
-const photoDefault = initialCards.map(function (item) {
-  return {
-    name: item.name,
-    link: item.link,
-  };
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+}
+CloseBtns.forEach(function(button){
+  const popup = button.closest('.popup');
+  button.addEventListener('click', () => closePopup(popup));
 });
 
-const add = () => {
-  photoDefault.forEach(addCard);
-};
-const addCard = ({ name, link }) => {
-  const photoElement = photoTemplate
-    .querySelector(".photo-grid__item")
-    .cloneNode(true);
-  photoElement.querySelector(".photo-grid__place-name").textContent = name;
-  photoElement.querySelector(".photo-grid__image").src = link;
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+}
+ProfileBtn.addEventListener("click", () => openPopup(profilePopup));
+AddCardBtn.addEventListener("click", () => openPopup(addPlacePopup));
 
-  photoElement
-    .querySelector(".photo-grid__like-button")
-    .addEventListener("click", function (evt) {
+const handleProfileFormSubmit = function (evt) {
+  evt.preventDefault();
+  userName.textContent = nameInput.value;
+  userStatus.textContent = jobInput.value;
+  closePopup(profilePopup)
+};
+formProfile.addEventListener("submit", handleProfileFormSubmit);
+
+function createCard(item) {
+    const cardElement = photoTemplate.querySelector(".photo-grid__item").cloneNode(true);
+  cardElement.querySelector(".photo-grid__place-name").textContent = item.name;
+  cardElement.querySelector(".photo-grid__image").src = item.link;
+  cardElement.querySelector(".photo-grid__image").alt = item.name;
+
+  cardElement.querySelector(".photo-grid__like-button").addEventListener("click", function (evt) {
       evt.target.classList.toggle("photo-grid__like-button_active");
     });
 
-  photoElement
-    .querySelector(".photo-grid__delete-button")
-    .addEventListener("click", function () {
-      photoElement.remove();
+    cardElement.querySelector(".photo-grid__delete-button").addEventListener("click", function () {
+      cardElement.remove();
     });
 
-  const togglePopupImage = function (index) {
-    popup[index].classList.toggle("popup_opened");
-    document.querySelector(".photo-grid__image_popup").src = link;
-    document.querySelector(".photo-grid__place-name_popup").textContent = name;
-  };
-  photoElement
-    .querySelector(".photo-grid__image")
-    .addEventListener("click", () => togglePopupImage(2));
-
-  photoContainer.prepend(photoElement);
+    const openImagePopup = function () {
+      openPopup(OpenImagePopup);
+      imagePopup.src = item.link;
+      imagePopup.alt = item.name;
+      placeNamePopup.textContent = item.name;
+    };
+    cardElement.querySelector(".photo-grid__image").addEventListener("click", () => openImagePopup());
+  return cardElement
 };
 
-add();
+function addCard(item) {
+   photoContainer.prepend(createCard(item));
+}
 
-const placeInput = document.querySelector(".form__item_el_user-place");
-const placeUrlInput = document.querySelector(".form__item_el_user-place-url");
-const formSubmitAddHandler = function (evt) {
+initialCards.forEach((item) => { 
+    addCard(item); 
+});
+
+const handleAddformSubmit = function (evt) {
   evt.preventDefault();
   const placeValue = placeInput.value;
   const placeUrlValue = placeUrlInput.value;
-  addCard({ name: placeValue, link: placeUrlValue });
-  togglePopup(1);
-};
-formElement[1].addEventListener("submit", formSubmitAddHandler);
+  addCard({ name: placeValue, link: placeUrlValue })
+    closePopup(addPlacePopup);
+  evt.target.reset()
+  };
+formPlace.addEventListener("submit", handleAddformSubmit);
+
