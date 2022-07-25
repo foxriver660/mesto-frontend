@@ -1,8 +1,8 @@
 const profilePopup = document.querySelector(".profile-popup");
 const addPlacePopup = document.querySelector(".add-place-popup");
-const OpenImagePopup = document.querySelector(".open-image-popup");
-const ProfileBtn = document.querySelector(".profile__eddit-button");
-const AddCardBtn = document.querySelector(".profile__add-button");
+const openImagePopup = document.querySelector(".open-image-popup");
+const profileBtn = document.querySelector(".profile__eddit-button");
+const addCardBtn = document.querySelector(".profile__add-button");
 const CloseBtns = document.querySelectorAll(".popup__close-button");
 const formProfile = document.querySelector(".form-profile");
 const userName = document.querySelector(".profile__user-name");
@@ -54,9 +54,11 @@ CloseBtns.forEach(function(button){
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  nameInput.value = userName.textContent;
+  jobInput.value = userStatus.textContent;
 }
-ProfileBtn.addEventListener("click", () => openPopup(profilePopup));
-AddCardBtn.addEventListener("click", () => openPopup(addPlacePopup));
+profileBtn.addEventListener("click", () => openPopup(profilePopup));
+addCardBtn.addEventListener("click", () => openPopup(addPlacePopup));
 
 const handleProfileFormSubmit = function (evt) {
   evt.preventDefault();
