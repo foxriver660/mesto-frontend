@@ -1,9 +1,9 @@
 const profilePopup = document.querySelector(".profile-popup");
 const addPlacePopup = document.querySelector(".add-place-popup");
-const openImagePopup = document.querySelector(".open-image-popup");
+const uncoverImagePopup = document.querySelector(".open-image-popup");
 const profileBtn = document.querySelector(".profile__eddit-button");
 const addCardBtn = document.querySelector(".profile__add-button");
-const CloseBtns = document.querySelectorAll(".popup__close-button");
+const closeBtns = document.querySelectorAll(".popup__close-button");
 const formProfile = document.querySelector(".form-profile");
 const userName = document.querySelector(".profile__user-name");
 const userStatus = document.querySelector(".profile__user-status");
@@ -47,7 +47,7 @@ const initialCards = [
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
-CloseBtns.forEach(function(button){
+closeBtns.forEach(function(button){
   const popup = button.closest('.popup');
   button.addEventListener('click', () => closePopup(popup));
 });
@@ -83,7 +83,7 @@ function createCard(item) {
     });
 
     const openImagePopup = function () {
-      openPopup(OpenImagePopup);
+      openPopup(uncoverImagePopup);
       imagePopup.src = item.link;
       imagePopup.alt = item.name;
       placeNamePopup.textContent = item.name;
