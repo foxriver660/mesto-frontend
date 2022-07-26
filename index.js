@@ -56,12 +56,12 @@ function openPopup(popup) {
   popup.classList.add('popup_opened');
   }
 
-function openProfilePopop(){
+function openProfilePopup(){
   openPopup(profilePopup)
   nameInput.value = userName.textContent;
   jobInput.value = userStatus.textContent;
 }
-profileBtn.addEventListener("click", () => openProfilePopop());
+profileBtn.addEventListener("click", () => openProfilePopup());
 addCardBtn.addEventListener("click", () => openPopup(addPlacePopup));
 
 const handleProfileFormSubmit = function (evt) {
