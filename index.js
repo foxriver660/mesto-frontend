@@ -54,10 +54,14 @@ closeBtns.forEach(function(button){
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  }
+
+function openProfilePopop(){
+  openPopup(profilePopup)
   nameInput.value = userName.textContent;
   jobInput.value = userStatus.textContent;
 }
-profileBtn.addEventListener("click", () => openPopup(profilePopup));
+profileBtn.addEventListener("click", () => openProfilePopop());
 addCardBtn.addEventListener("click", () => openPopup(addPlacePopup));
 
 const handleProfileFormSubmit = function (evt) {
