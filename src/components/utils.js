@@ -1,6 +1,26 @@
-export {popups, profilePopup, addPlacePopup, uncoverImagePopup, profileBtn, addCardBtn, closeBtns, formProfile, userName, userStatus, formPlace, nameInput, jobInput, placeInput, placeUrlInput, photoTemplate, photoContainer, imagePopup, placeNamePopup, initialCards}
+export {
+  popups,
+  profilePopup,
+  addPlacePopup,
+  uncoverImagePopup,
+  profileBtn,
+  addCardBtn,
+  closeBtns,
+  formProfile,
+  userName,
+  userStatus,
+  formPlace,
+  nameInput,
+  jobInput,
+  placeInput,
+  placeUrlInput,
+  photoTemplate,
+  photoContainer,
+  imagePopup,
+  placeNamePopup,
+  initialCards,
+};
 const popups = document.querySelectorAll(".popup");
-
 const profilePopup = document.querySelector(".profile-popup");
 const addPlacePopup = document.querySelector(".add-place-popup");
 const uncoverImagePopup = document.querySelector(".open-image-popup");
