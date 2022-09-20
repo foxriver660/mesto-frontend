@@ -1,5 +1,6 @@
 export {createCard, addCard, handleAddformSubmit}
 import {popups, profilePopup, addPlacePopup, uncoverImagePopup, profileBtn, addCardBtn, closeBtns, formProfile, userName, userStatus, formPlace, nameInput, jobInput, placeInput, placeUrlInput, photoTemplate, photoContainer, imagePopup, placeNamePopup, initialCards} from './utils'
+import {openImagePopup} from './modal'
 // СОЗДАНИЕ НОВОЙ КАРТОЧКИ
 function createCard(item) {
   const cardElement = photoTemplate.querySelector(".photo-grid__item").cloneNode(true);
@@ -12,13 +13,9 @@ cardElement.querySelector(".photo-grid__like-button").addEventListener("click", 
   cardElement.querySelector(".photo-grid__delete-button").addEventListener("click", function () {
     cardElement.remove();
   });
-  const openImagePopup = function () {
-    openPopup(uncoverImagePopup);
-    imagePopup.src = item.link;
-    imagePopup.alt = item.name;
-    placeNamePopup.textContent = item.name;
-  };
-  cardElement.querySelector(".photo-grid__image").addEventListener("click", () => openImagePopup());
+  
+ // СЛУШАТЕЛЬ ОТКРЫТИЯ ФУУЛ САЙЗ ИЗОБРАЖЕНИЯ
+cardElement.querySelector(".photo-grid__image").addEventListener("click", () => openImagePopup());
 return cardElement
 };
 

@@ -1,4 +1,4 @@
-export {closePopup, closeOverlayPopup, closeEscPopup, openPopup, openProfilePopup, handleProfileFormSubmit}
+export {closePopup, closeOverlayPopup, closeEscPopup, openPopup, openProfilePopup, handleProfileFormSubmit, openImagePopup}
 import {popups, profilePopup, addPlacePopup, uncoverImagePopup, profileBtn, addCardBtn, closeBtns, formProfile, userName, userStatus, formPlace, nameInput, jobInput, placeInput, placeUrlInput, photoTemplate, photoContainer, imagePopup, placeNamePopup, initialCards} from './utils'
 // ФУНКЦИЯ ЗАКРЫТИЯ ПОПАПА
 function closePopup() {
@@ -36,7 +36,13 @@ function openProfilePopup(){
   nameInput.value = userName.textContent;
   jobInput.value = userStatus.textContent;
 }
-
+// ОТКРЫТИЕ ПОПАПА КАРТИНКИ ФУУЛ САЙЗ
+function openImagePopup() {
+  openPopup(uncoverImagePopup);
+  imagePopup.src = item.link;
+  imagePopup.alt = item.name;
+  placeNamePopup.textContent = item.name;
+};
 // ЗАМЕНА ДАННЫХ ВВЕДЕНЫХ ПОЛЬЗОВАТЕЛЕМ В ПРОФИЛЕ
 function handleProfileFormSubmit (evt) {
   evt.preventDefault();
@@ -44,3 +50,4 @@ function handleProfileFormSubmit (evt) {
   userStatus.textContent = jobInput.value;
   closePopup(profilePopup)
 };
+
