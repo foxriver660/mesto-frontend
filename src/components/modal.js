@@ -4,11 +4,9 @@ export {
   closeEscPopup,
   openPopup,
   openProfilePopup,
-  handleProfileFormSubmit,
   openImagePopup,
 };
 import {
-  popups,
   profilePopup,
   uncoverImagePopup,
   userName,
@@ -17,14 +15,20 @@ import {
   jobInput,
   imagePopup,
   placeNamePopup,
+  validationConfig,
   } from "./utils";
+  import {
+    enableValidation,
+    } from './validate'
 // ФУНКЦИЯ ЗАКРЫТИЯ ПОПАПА
-function closePopup() {
-  popups.forEach((popup) => {
+function closePopup(popup) {
     popup.classList.remove("popup_opened");
+    // УДАЛЕНИЯ СЛУШАТЕЛя НА ОВЕРЛЕЙ
     popup.removeEventListener("click", closeOverlayPopup);
-  });
-}
+    // УДАЛЕНИЯ СЛУШАТЕЛя НА ESC
+    document.removeEventListener("keydown", closeEscPopup);
+};
+
 // ЗАКРЫТИЕ КЛИКОМ ГА ОВЕРЛЕЙ
 function closeOverlayPopup(evt) {
   if (evt.target === evt.currentTarget) {
@@ -46,7 +50,11 @@ function closeEscPopup(evt) {
 // ОТКРЫТИЕ ПОПАПА
 function openPopup(popup) {
   popup.classList.add("popup_opened");
+  // ДОБАВЛЕНИЕ СЛУШАТЕЛЯ НА ОВЕРЛЕЙ
   popup.addEventListener("mousedown", closeOverlayPopup);
+  // ДОБАВЛЕНИЕ СЛУШАТЕЛЯ НА ESC
+  document.addEventListener("keydown", closeEscPopup);
+  enableValidation(validationConfig)
 }
 
 // ОТКРЫТИЕ ПОПАПА РЕДАКТИРОВАНИЯ ПРОФИЛЯ
@@ -62,10 +70,4 @@ function openImagePopup(item) {
   imagePopup.alt = item.name;
   placeNamePopup.textContent = item.name;
 }
-// ЗАМЕНА ДАННЫХ ВВЕДЕНЫХ ПОЛЬЗОВАТЕЛЕМ В ПРОФИЛЕ
-function handleProfileFormSubmit(evt) {
-  evt.preventDefault();
-  userName.textContent = nameInput.value;
-  userStatus.textContent = jobInput.value;
-  closePopup(profilePopup);
-}
+

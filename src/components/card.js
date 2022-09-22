@@ -1,50 +1,39 @@
-export { createCard, addCard, handleAddformSubmit };
-import {
-  addPlacePopup,
-  placeInput,
-  placeUrlInput,
-  photoTemplate,
-  photoContainer,
-  } from "./utils";
-import { openImagePopup, closePopup } from "./modal";
+export { createCard };
+import { photoTemplate } from "./utils";
+import { openImagePopup } from "./modal";
+
+// СОЗДАНИЕ ТЕМПЛЕЙТА КАРТОЧКИ
+function getTemplate() {
+  return photoTemplate.querySelector(".photo-grid__item").cloneNode(true);
+}
+// СЛУШАТЕЛИ НА ЭЛЕМЕНТЫ КНОПКИ
+function setEventListeners(element, callback) {
+  element.addEventListener("click", callback);
+}
 // СОЗДАНИЕ НОВОЙ КАРТОЧКИ
 function createCard(initialCard) {
-  const cardElement = photoTemplate
-    .querySelector(".photo-grid__item")
-    .cloneNode(true);
-  cardElement.querySelector(".photo-grid__place-name").textContent =
-    initialCard.name;
-  cardElement.querySelector(".photo-grid__image").src = initialCard.link;
-  cardElement.querySelector(".photo-grid__image").alt = initialCard.name;
-  cardElement
-    .querySelector(".photo-grid__like-button")
-    .addEventListener("click", function (evt) {
-      evt.target.classList.toggle("photo-grid__like-button_active");
-    });
-  cardElement
-    .querySelector(".photo-grid__delete-button")
-    .addEventListener("click", function () {
-      cardElement.remove();
-    });
+  const cardElement = getTemplate();
+  const cardElementImage = cardElement.querySelector(".photo-grid__image");
+  const cardElementName = cardElement.querySelector(".photo-grid__place-name");
+  const cardElementLikeBtn = cardElement.querySelector(
+    ".photo-grid__like-button"
+  );
+  const cardElementDeleteBtn = cardElement.querySelector(
+    ".photo-grid__delete-button"
+  );
+  cardElementName.textContent = initialCard.name;
+  cardElementImage.src = initialCard.link;
+  cardElementImage.alt = initialCard.name;
+  // ЛАЙК КНОПКА
+  setEventListeners(cardElementLikeBtn, (evt) =>
+    evt.target.classList.toggle("photo-grid__like-button_active")
+  );
+  // ДЕЛИТ КНОПКА
+  setEventListeners(cardElementDeleteBtn, () => cardElement.remove());
   // СЛУШАТЕЛЬ ОТКРЫТИЯ ФУУЛ САЙЗ ИЗОБРАЖЕНИЯ
-  cardElement
-    .querySelector(".photo-grid__image")
-    .addEventListener("click", () => openImagePopup(initialCard));
+  setEventListeners(cardElementImage, () => openImagePopup(initialCard));
 
   return cardElement;
 }
 
-// ДОБАВЛЕНИЕ НОВОЙ КАРТОЧКИ
-function addCard(initialCard) {
-  photoContainer.prepend(createCard(initialCard));
-}
 
-// ДОБАВЛЕНИЕ НОВОЙ КАРТОЧКИ ИЗ ПОПАПА
-function handleAddformSubmit(evt) {
-  evt.preventDefault();
-  const placeValue = placeInput.value;
-  const placeUrlValue = placeUrlInput.value;
-  addCard({ name: placeValue, link: placeUrlValue });
-  closePopup(addPlacePopup);
-  evt.target.reset();
-}

@@ -19,6 +19,7 @@ export {
   imagePopup,
   placeNamePopup,
   initialCards,
+  validationConfig
 };
 const popups = document.querySelectorAll(".popup");
 const profilePopup = document.querySelector(".profile-popup");
@@ -66,3 +67,10 @@ const initialCards = [
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
   },
 ];
+const validationConfig = {
+  formSelector: ".form",
+  inputSelector: ".form__item",
+  submitButtonSelector: ".form__button",
+  inputErrorClass: "form__item_type_error",
+  errorClass: "form__input-error_active",
+}
