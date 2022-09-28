@@ -7,7 +7,7 @@ export {
   hasInvalidInput,
   changebuttonState,
 };
-import { profileBtn, addCardBtn, profileUserImage } from "./utils";
+import { profileBtn, addCardBtn, profileUserImage, changeAvatarBtn } from "./utils";
 // !  ПОКАЗАТЬ ОШИБКУ
 const showInputError = (formType, inputType, errorMessage, objectValid) => {
   const errorType = formType.querySelector(`.${inputType.id}-error`);
@@ -62,7 +62,7 @@ function setEventListeners(formType, objectValid) {
       hideInputError(formType, inputType, objectValid);
       changebuttonState(inputList, buttonElement)
     });
-    profileUserImage.addEventListener("click", () => {
+    changeAvatarBtn.addEventListener("click", () => {
       hideInputError(formType, inputType, objectValid);
       changebuttonState(inputList, buttonElement)
     });

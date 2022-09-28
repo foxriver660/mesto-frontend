@@ -45,10 +45,8 @@ function createCard(initialCard) {
       deleteLike(cardElementId);
     }
   });
-  console.log(cardElementId);
-  // ДЕЛИТ КНОПКА
-  // checkForDeletion(cardElementImage)
-  setEventListeners(cardElementDeleteBtn, () => {
+   // ДЕЛИТ КНОПКА
+    setEventListeners(cardElementDeleteBtn, () => {
     cardElement.remove();
     deleteUserCard(cardElementId);
   });
