@@ -4,6 +4,7 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  outline: none;
   border-radius: 0;
   width: 24px;
   height: 24px;

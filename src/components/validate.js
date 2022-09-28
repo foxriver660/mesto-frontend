@@ -7,8 +7,8 @@ export {
   hasInvalidInput,
   changebuttonState,
 };
-import { profileBtn, addCardBtn } from "./utils";
-// ПОКАЗАТЬ ОШИБКУ
+import { profileBtn, addCardBtn, profileUserImage } from "./utils";
+// !  ПОКАЗАТЬ ОШИБКУ
 const showInputError = (formType, inputType, errorMessage, objectValid) => {
   const errorType = formType.querySelector(`.${inputType.id}-error`);
   inputType.classList.add(objectValid.inputErrorClass);
@@ -16,7 +16,7 @@ const showInputError = (formType, inputType, errorMessage, objectValid) => {
   errorType.textContent = errorMessage;
 };
 
-// СКРЫТЬ ОШИБКУ
+// ! СКРЫТЬ ОШИБКУ
 function hideInputError(formType, inputType, objectValid) {
   const errorType = formType.querySelector(`.${inputType.id}-error`);
   inputType.classList.remove(objectValid.inputErrorClass);
@@ -24,7 +24,7 @@ function hideInputError(formType, inputType, objectValid) {
   errorType.textContent = "";
 }
 
-// ПРОВЕРКА КАЖДОГО ИМПУТА
+// ! ПРОВЕРКА КАЖДОГО ИМПУТА
 function isValid(formType, inputType, objectValid) {
   if (inputType.validity.patternMismatch) {
     inputType.setCustomValidity(inputType.dataset.errorMessage);
@@ -43,7 +43,7 @@ function isValid(formType, inputType, objectValid) {
   }
 }
 
-// УСТАНОВКА ВСЕХ СЛУШАТЕЛЕЙ НА ВАЛИДНОСТЬ
+// ! УСТАНОВКА ВСЕХ СЛУШАТЕЛЕЙ НА ВАЛИДНОСТЬ
 function setEventListeners(formType, objectValid) {
   const inputList = Array.from(
     formType.querySelectorAll(objectValid.inputSelector)
@@ -52,7 +52,7 @@ function setEventListeners(formType, objectValid) {
     objectValid.submitButtonSelector
   );
   changebuttonState(inputList, buttonElement, objectValid);
-  // СЛУШАТЕЛИ ПРИ ОТКРЫТИИ И ВВЕДЕНИИ ИНПУТОВ
+  // слушатели при открытии попапов
   inputList.forEach((inputType) => {
     profileBtn.addEventListener("click", () => {
       isValid(formType, inputType, objectValid);
@@ -62,6 +62,11 @@ function setEventListeners(formType, objectValid) {
       hideInputError(formType, inputType, objectValid);
       changebuttonState(inputList, buttonElement)
     });
+    profileUserImage.addEventListener("click", () => {
+      hideInputError(formType, inputType, objectValid);
+      changebuttonState(inputList, buttonElement)
+    });
+    // слушатель инпутов
     inputType.addEventListener("input", () => {
       isValid(formType, inputType, objectValid);
       changebuttonState(inputList, buttonElement, objectValid);
@@ -70,7 +75,7 @@ function setEventListeners(formType, objectValid) {
    }
 
 
-// ЕДИНАЯ ФУНКЦИЯ ПРОВЕРКИ ВАЛИДНОСТИ
+// ! ЕДИНАЯ ФУНКЦИЯ ПРОВЕРКИ ВАЛИДНОСТИ
 function enableValidation(objectValid) {
   const formList = Array.from(
     document.querySelectorAll(objectValid.formSelector)
@@ -83,14 +88,14 @@ function enableValidation(objectValid) {
   });
 }
 
-// ПРОВЕРКА МАССИВА ПОЛЕЙ ФОМЫ НА ВАЛИДНОСТЬ
+// ! ПРОВЕРКА МАССИВА ПОЛЕЙ ФОМЫ НА ВАЛИДНОСТЬ
 function hasInvalidInput(inputList) {
   return inputList.some((inputType) => {
     return !inputType.validity.valid;
   });
 }
 
-// СОСТОЯНИЕ КНОПКИ САБМИТ
+// ! СОСТОЯНИЕ КНОПКИ САБМИТ
 function changebuttonState(inputList, buttonElement) {
   if (hasInvalidInput(inputList)) {
     buttonElement.setAttribute("disabled", "disabled");

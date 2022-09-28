@@ -5,6 +5,7 @@
   -moz-appearance: none;
   appearance: none;
     border-radius: 2px;
+    outline: none;
   max-width: 22px;
   border: 2px solid #fff;
   box-sizing: border-box;

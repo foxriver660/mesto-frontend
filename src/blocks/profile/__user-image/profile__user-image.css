@@ -1,7 +1,12 @@
 .profile__user-image {
-  max-width: 120px;
-  width: 100%;
+  width: 120px;
   border-radius: 50%;
   height: 120px;
-  
+  object-fit: cover;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: all .3s ease-in-out;
+  }
+.profile__user-image:hover {
+  opacity: 0.2;
+  cursor: pointer;
 }

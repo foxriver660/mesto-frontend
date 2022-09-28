@@ -17,11 +17,13 @@
     </header>
     <main class="content">
       <section class="profile">
-        <img
-          class="profile__user-image"
-          src="<%=require('./image/image.jpg')%>"
-          alt="Фотография профиля"
-        />
+        <button class="profile__change-image-btn">
+          <img
+            class="profile__user-image"
+            src="<%=require('./image/image.jpg')%>"
+            alt="Фотография профиля"
+          />
+        </button>
         <div class="profile__user-window">
           <h1 class="profile__user-name">Жак-Ив Кусто</h1>
           <button
@@ -46,11 +48,14 @@
             />
             <div class="photo-grid__root">
               <h2 class="photo-grid__place-name"></h2>
-              <button
-                type="button"
-                class="photo-grid__like-button"
-                aria-label="Добавить"
-              ></button>
+              <div class="photo-grid__like-container">
+                <button
+                  type="button"
+                  class="photo-grid__like-button"
+                  aria-label="Добавить"
+                ></button>
+                <span class="photo-grid__like-count">1</span>
+              </div>
               <button
                 type="button"
                 class="photo-grid__delete-button active-link"
@@ -164,6 +169,39 @@
         </form>
       </div>
     </div>
+    <!--! ----------------------------------------------------------РЕДАКТИРОВАНИЕ ПРОФИЛЯ -->
+    <div class="popup change-avatar-popup">
+      <div class="popup__container">
+        <button
+          type="button"
+          class="popup__close-button active-link"
+          aria-label="Закрыть"
+        ></button>
+        <form name="user-avatar" class="form form-avatar" novalidate>
+          <h2 class="form__title">Обновить аватар</h2>
+          <fieldset class="form__container">
+            <label class="form__field">
+              <input
+                id="avatar-input"
+                name="user-avatar"
+                type="url"
+                class="form__item form__item_el_user-avatar"
+                placeholder="Ссылка на картинку"
+                value=""
+                pattern="https://.*"
+                data-error-message="Введите URL ссылку на изображение"
+                required
+              />
+              <span class="avatar-input-error form__input-error"
+                >Необходимо заполнить данное поле</span
+              >
+            </label>
+          </fieldset>
+          <button type="submit" class="form__button">Сохранить</button>
+        </form>
+      </div>
+    </div>
+    <!-- !)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))) -->
     <div class="popup open-image-popup">
       <div class="popup__image-container">
         <img
