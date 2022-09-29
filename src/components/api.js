@@ -69,9 +69,9 @@ const updateUserCard = (name, link) => {
   });
 };
 
-// +++++++++++++++++УДАЛЕНИЕ КАРТОЧКИ С СЕРВЕРА
-function deleteUserCard(cardId) {
-  fetch(`${config.baseUrl}/cards/${cardId}`, {
+// !+++++++++++++++++УДАЛЕНИЕ КАРТОЧКИ С СЕРВЕРА
+const deleteUserCard = (cardId) => {
+  return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
     body: JSON.stringify({
@@ -80,9 +80,9 @@ function deleteUserCard(cardId) {
   });
 }
 
-// +++++++++++++++++ДОБАВЛЕНИЕ ЛАЙНА НА СЕРВЕР
-function pushLike(cardId) {
-  fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+// !+++++++++++++++++ДОБАВЛЕНИЕ ЛАЙКА НА СЕРВЕР
+const pushLike = (cardId) => {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "PUT",
     headers: config.headers,
     body: JSON.stringify({
@@ -91,9 +91,9 @@ function pushLike(cardId) {
   });
 }
 
-// +++++++++++++++++УДАЛЕНИЕ ЛАЙКА С СЕРВЕРА
-function deleteLike(cardId) {
-  fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+// !+++++++++++++++++УДАЛЕНИЕ ЛАЙКА С СЕРВЕРА
+const deleteLike = (cardId) => {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
     body: JSON.stringify({

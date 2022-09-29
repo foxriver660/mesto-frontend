@@ -36,7 +36,7 @@ import {
   updateUserAvatar,
   updateUserCard,
   renderLoading,
- } from "./api";
+} from "./api";
 export { addCard };
 
 
@@ -49,7 +49,7 @@ getUserID()
     return Promise.reject(`Ошибка: ${res.status}`);
   })
   .then((data) => {
-    const usedId = data._id
+    const usedId = data._id;
     userName.textContent = data.name;
     userStatus.textContent = data.about;
     profileUserImage.src = data.avatar;
@@ -62,11 +62,10 @@ getUserID()
         return Promise.reject(`Ошибка: ${res.status}`);
       })
       .then((dataCards) => {
-        console.log(dataCards[3])
         dataCards.reverse().forEach((dataCard) => {
           addCard(dataCard);
           checkForDeletion(dataCard, usedId);
-          dataCard.likes.forEach((like) => checkForUserLike(like, usedId))
+          dataCard.likes.forEach((like) => checkForUserLike(like, usedId));
         });
       })
       .catch((err) => {
@@ -109,7 +108,7 @@ function handleProfileFormSubmit(evt) {
       renderLoading(false);
     });
   renderLoading(true);
- }
+}
 // СЛУШАТЕЛЬ САБМИТА ПОПАПА ПРОФИЛЯ
 formProfile.addEventListener("submit", handleProfileFormSubmit);
 
@@ -119,7 +118,6 @@ function handleAvatarFormSubmit(evt) {
   profileUserImage.src = avatarInput.value;
   updateUserAvatar(avatarInput.value)
     .then((res) => {
-      console.log(res.ok);
       if (res.ok) {
         closePopup(avatarPopup);
       } else {
@@ -164,7 +162,7 @@ function handleAddformSubmit(evt) {
       renderLoading(false);
     });
   renderLoading(true);
- evt.target.reset();
+  evt.target.reset();
 }
 // СЛУШАТЕЛЬ САБМИТА ПОПАПА ДОБАВЛЕНИЯ КАРТОЧКИ
 formPlace.addEventListener("submit", handleAddformSubmit);

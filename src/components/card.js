@@ -36,19 +36,48 @@ function createCard(initialCard) {
     if (
       !cardElementLikeBtn.classList.contains("photo-grid__like-button_active")
     ) {
-      evt.target.classList.add("photo-grid__like-button_active");
-      cardElementLikeCount.textContent++;
-      pushLike(cardElementId);
+      pushLike(cardElementId)
+        .then((res) => {
+          if (res.ok) {
+            
+            evt.target.classList.add("photo-grid__like-button_active");
+            cardElementLikeCount.textContent++;
+          } else {
+            return Promise.reject(`Ошибка: ${res.status}`);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+        
     } else {
-      evt.target.classList.remove("photo-grid__like-button_active");
-      cardElementLikeCount.textContent--;
-      deleteLike(cardElementId);
+      deleteLike(cardElementId)
+        .then((res) => {
+          if (res.ok) {
+            evt.target.classList.remove("photo-grid__like-button_active");
+            cardElementLikeCount.textContent--;
+          } else {
+            return Promise.reject(`Ошибка: ${res.status}`);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   });
-   // ДЕЛИТ КНОПКА
-    setEventListeners(cardElementDeleteBtn, () => {
-    cardElement.remove();
-    deleteUserCard(cardElementId);
+  // ДЕЛИТ КНОПКА
+  setEventListeners(cardElementDeleteBtn, () => {
+    deleteUserCard(cardElementId)
+      .then((res) => {
+        if (res.ok) {
+          cardElement.remove();
+        } else {
+          return Promise.reject(`Ошибка: ${res.status}`);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   });
   // СЛУШАТЕЛЬ ОТКРЫТИЯ ФУУЛ САЙЗ ИЗОБРАЖЕНИЯ
   setEventListeners(cardElementImage, () => openImagePopup(initialCard));
@@ -56,22 +85,17 @@ function createCard(initialCard) {
   return cardElement;
 }
 
-
 // СВЕРКА ID ПОЛЬЗОВАТЕЛЯ и ID СОЗДАТЕЛЯ КАРТОЧКИ
 function checkForDeletion(card, user) {
-  const cardDeleteBtn = document.querySelector(
-    ".photo-grid__delete-button"
-  );
+  const cardDeleteBtn = document.querySelector(".photo-grid__delete-button");
   if (!(card.owner._id == user)) {
     cardDeleteBtn.classList.add("photo-grid__delete-button_disabled");
   }
 }
 // СВЕРКА ID ПОЛЬЗОВАТЕЛЯ и ID ЛАЙКА КАРТОЧКИ
 function checkForUserLike(cardLike, user) {
-  const cardLikeBtn = document.querySelector(
-    ".photo-grid__like-button"
-  );
-   if (cardLike._id == user) {
+  const cardLikeBtn = document.querySelector(".photo-grid__like-button");
+  if (cardLike._id == user) {
     cardLikeBtn.classList.add("photo-grid__like-button_active");
   }
 }
