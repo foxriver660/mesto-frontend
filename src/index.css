@@ -41,3 +41,7 @@
 @import url(./blocks/form/__input-error/form__input-error.css);
 @import url(./blocks/form/__input-error/_active/form__input-error_active.css);
 @import url(./blocks/form/__field/form__field.css);
+@import url(./blocks/photo-grid/__like-count/photo-grid__like-count.css);
+@import url(./blocks/photo-grid/__like-container/photo-grid__like-container.css);
+@import url(./blocks/photo-grid/__delete-button/_disabled/photo-grid__delete-button_disabled.css);
+@import url(./blocks/profile/__change-image-btn/profile__change-image-btn.css);
