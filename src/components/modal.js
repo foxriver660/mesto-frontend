@@ -75,5 +75,5 @@ function openImagePopup(item) {
 // ! ОТКРЫТИЕ ПОПАПА РЕДАКТИРОВАНИЯ АВАТАРА
 function openAvatarPopup() {
   openPopup(avatarPopup);
-  avatarInput.value = profileUserImage.src;
+  avatarInput.value = '';
   }

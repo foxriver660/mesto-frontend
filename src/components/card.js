@@ -33,13 +33,14 @@ function createCard(initialCard) {
   cardElementId = initialCard._id;
   // ЛАЙК КНОПКА
   setEventListeners(cardElementLikeBtn, (evt) => {
+    
     if (
-      !cardElementLikeBtn.classList.contains("photo-grid__like-button_active")
+      !cardElementLikeBtn.classList.contains("photo-grid__like-button_active") 
     ) {
+      
       pushLike(cardElementId)
         .then((res) => {
           if (res.ok) {
-            
             evt.target.classList.add("photo-grid__like-button_active");
             cardElementLikeCount.textContent++;
           } else {
