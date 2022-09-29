@@ -39,43 +39,44 @@ import {
 } from "./api";
 export { addCard };
 
-
 // СЕРВЕР: инициализация данных пользователя
-getUserID()
-  .then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  })
-  .then((data) => {
-    const usedId = data._id;
-    userName.textContent = data.name;
-    userStatus.textContent = data.about;
-    profileUserImage.src = data.avatar;
-    // СЕРВЕР: закрузка карточек после загрузки данных пользователя
-    getCards()
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-      .then((dataCards) => {
-        dataCards.reverse().forEach((dataCard) => {
-          addCard(dataCard);
-          checkForDeletion(dataCard, usedId);
-          dataCard.likes.forEach((like) => checkForUserLike(like, usedId));
+function updateData() {
+  getUserID()
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .then((data) => {
+      const usedId = data._id;
+      userName.textContent = data.name;
+      userStatus.textContent = data.about;
+      profileUserImage.src = data.avatar;
+      // СЕРВЕР: закрузка карточек после загрузки данных пользователя
+      getCards()
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
+          return Promise.reject(`Ошибка: ${res.status}`);
+        })
+        .then((dataCards) => {
+          dataCards.reverse().forEach((dataCard) => {
+            addCard(dataCard);
+            checkForDeletion(dataCard, usedId);
+            dataCard.likes.forEach((like) => checkForUserLike(like, usedId));
+          });
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+updateData();
 // СЛУШАТЕЛЬ ЗАКРЫТИЯ ПОПАПОВ НА КРЕСТИК
 closeBtns.forEach((closeBtn) => {
   const selectedPopup = closeBtn.closest(".popup");
@@ -145,12 +146,26 @@ function handleAddformSubmit(evt) {
   const placeValue = placeInput.value;
   const placeUrlValue = placeUrlInput.value;
   const newUserCard = { name: placeValue, link: placeUrlValue, likes: [] };
-  addCard(newUserCard);
   // апдейт карточки на сервере
   updateUserCard(placeValue, placeUrlValue)
     .then((res) => {
       if (res.ok) {
         closePopup(addPlacePopup);
+        // получение ID новой карточки
+       getCards()
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
+          return Promise.reject(`Ошибка: ${res.status}`);
+        })
+        .then((dataCards) => {
+          newUserCard._id = dataCards[0]._id
+          addCard(newUserCard);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       } else {
         return Promise.reject(`Ошибка: ${res.status}`);
       }
@@ -160,7 +175,7 @@ function handleAddformSubmit(evt) {
     })
     .finally((res) => {
       renderLoading(false);
-    });
+         });
   renderLoading(true);
   evt.target.reset();
 }
