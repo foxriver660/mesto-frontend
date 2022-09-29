@@ -25,17 +25,11 @@ export {
   formAvatar,
   changeAvatarBtn,
   submitBtns,
-  tokenAuthorization
-};
-
-const tokenAuthorization = "a80c9fc1-0c23-4d33-8f6c-044abe54b54c";
+ };
 
 const profileUserImage = document.querySelector(".profile__user-image");
 const changeAvatarBtn = document.querySelector(".profile__change-image-btn");
 const submitBtns = document.querySelectorAll(".form__button");
-
-
-
 const popups = document.querySelectorAll(".popup");
 const profilePopup = document.querySelector(".profile-popup");
 const addPlacePopup = document.querySelector(".add-place-popup");

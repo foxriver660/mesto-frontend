@@ -1,23 +1,6 @@
 import {
-  userName,
-  userStatus,
-  profileUserImage,
   submitBtns,
-  tokenAuthorization,
-  profilePopup,
-  avatarPopup,
-  addPlacePopup,
 } from "./utils";
-import { addCard } from "./index";
-import {
-  closePopup,
-  closeOverlayPopup,
-  closeEscPopup,
-  openPopup,
-  openProfilePopup,
-  openImagePopup,
-  openAvatarPopup,
-} from "./modal";
 
 export {
   deleteUserCard,
@@ -29,8 +12,7 @@ export {
   updateUserAvatar,
   updateUserCard,
   renderLoading,
-  checkForDeletion,
-};
+ };
 
 const config = {
   baseUrl: "https://mesto.nomoreparties.co/v1/plus-cohort-15",
@@ -120,17 +102,8 @@ function deleteLike(cardId) {
   });
 }
 
-// +++++++++ПРОВЕРКА ПОЛЬЗОВАТЕЛЯ ДЛЯ ВОЗМОЖНОСТИ УДАЛИТЬ КАРТОЧКУ
-function checkForDeletion(data) {
-  const cardElementDeleteBtn = document.querySelector(
-    ".photo-grid__delete-button"
-  );
-  if (!(data.owner.name == userName.textContent)) {
-    cardElementDeleteBtn.classList.add("photo-grid__delete-button_disabled");
-  }
-}
 
-// +++++++++++++ОТОБРАЖЕНИЕ ЗАГРУЗКИ ДАННЫХ НА СЕРВЕР
+// ОТОБРАЖЕНИЕ ЗАГРУЗКИ ДАННЫХ НА СЕРВЕР
 function renderLoading(isLoading) {
   if (isLoading) {
     submitBtns.forEach(

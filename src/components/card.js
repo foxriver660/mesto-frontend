@@ -1,4 +1,4 @@
-export { createCard };
+export { createCard, checkForDeletion, checkForUserLike };
 import { photoTemplate } from "./utils";
 import { openImagePopup } from "./modal";
 import { deleteUserCard, pushLike, deleteLike } from "./api";
@@ -54,4 +54,24 @@ function createCard(initialCard) {
   setEventListeners(cardElementImage, () => openImagePopup(initialCard));
 
   return cardElement;
+}
+
+
+// СВЕРКА ID ПОЛЬЗОВАТЕЛЯ и ID СОЗДАТЕЛЯ КАРТОЧКИ
+function checkForDeletion(card, user) {
+  const cardDeleteBtn = document.querySelector(
+    ".photo-grid__delete-button"
+  );
+  if (!(card.owner._id == user)) {
+    cardDeleteBtn.classList.add("photo-grid__delete-button_disabled");
+  }
+}
+// СВЕРКА ID ПОЛЬЗОВАТЕЛЯ и ID ЛАЙКА КАРТОЧКИ
+function checkForUserLike(cardLike, user) {
+  const cardLikeBtn = document.querySelector(
+    ".photo-grid__like-button"
+  );
+   if (cardLike._id == user) {
+    cardLikeBtn.classList.add("photo-grid__like-button_active");
+  }
 }

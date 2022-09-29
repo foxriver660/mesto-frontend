@@ -1,6 +1,6 @@
 import "../index.css";
 import { enableValidation } from "./validate";
-import { createCard } from "./card";
+import { createCard, checkForDeletion, checkForUserLike } from "./card";
 import {
   closePopup,
   openPopup,
@@ -30,37 +30,16 @@ import {
   changeAvatarBtn,
 } from "./utils";
 import {
-  deleteUserCard,
-  pushLike,
-  deleteLike,
   getCards,
   getUserID,
   updateUserProfile,
   updateUserAvatar,
   updateUserCard,
   renderLoading,
-  checkForDeletion,
-} from "./api";
+ } from "./api";
 export { addCard };
 
-// СЕРВЕР: инициализация карточек
-getCards()
-  .then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  })
-  .then((dataCards) => {
-    console.log(dataCards[0])
-    dataCards.reverse().forEach((dataCard) => {
-      addCard(dataCard);
-      checkForDeletion(dataCard);
-    });
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+
 // СЕРВЕР: инициализация данных пользователя
 getUserID()
   .then((res) => {
@@ -70,10 +49,29 @@ getUserID()
     return Promise.reject(`Ошибка: ${res.status}`);
   })
   .then((data) => {
-    console.log(data);
+    const usedId = data._id
     userName.textContent = data.name;
     userStatus.textContent = data.about;
     profileUserImage.src = data.avatar;
+    // СЕРВЕР: закрузка карточек после загрузки данных пользователя
+    getCards()
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .then((dataCards) => {
+        console.log(dataCards[3])
+        dataCards.reverse().forEach((dataCard) => {
+          addCard(dataCard);
+          checkForDeletion(dataCard, usedId);
+          dataCard.likes.forEach((like) => checkForUserLike(like, usedId))
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   })
   .catch((err) => {
     console.log(err);
@@ -100,15 +98,18 @@ function handleProfileFormSubmit(evt) {
     .then((res) => {
       if (res.ok) {
         closePopup(profilePopup);
+      } else {
+        return Promise.reject(`Ошибка: ${res.status}`);
       }
-      else {return Promise.reject(`Ошибка: ${res.status}`);}
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally((res) => {
+      renderLoading(false);
     });
   renderLoading(true);
-  // closePopup(profilePopup);
-}
+ }
 // СЛУШАТЕЛЬ САБМИТА ПОПАПА ПРОФИЛЯ
 formProfile.addEventListener("submit", handleProfileFormSubmit);
 
@@ -118,16 +119,20 @@ function handleAvatarFormSubmit(evt) {
   profileUserImage.src = avatarInput.value;
   updateUserAvatar(avatarInput.value)
     .then((res) => {
-      console.log(res.ok)
+      console.log(res.ok);
       if (res.ok) {
         closePopup(avatarPopup);
-      } else {return Promise.reject(`Ошибка: ${res.status}`);}
+      } else {
+        return Promise.reject(`Ошибка: ${res.status}`);
+      }
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally((res) => {
+      renderLoading(false);
     });
   renderLoading(true);
-  // closePopup(avatarPopup);
 }
 // СЛУШАТЕЛЬ САБМИТА ПОПАПА АВАТАРА
 formAvatar.addEventListener("submit", handleAvatarFormSubmit);
@@ -148,15 +153,18 @@ function handleAddformSubmit(evt) {
     .then((res) => {
       if (res.ok) {
         closePopup(addPlacePopup);
+      } else {
+        return Promise.reject(`Ошибка: ${res.status}`);
       }
-      else {return Promise.reject(`Ошибка: ${res.status}`);}
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally((res) => {
+      renderLoading(false);
     });
   renderLoading(true);
-  // closePopup(addPlacePopup);
-  evt.target.reset();
+ evt.target.reset();
 }
 // СЛУШАТЕЛЬ САБМИТА ПОПАПА ДОБАВЛЕНИЯ КАРТОЧКИ
 formPlace.addEventListener("submit", handleAddformSubmit);

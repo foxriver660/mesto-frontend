@@ -7,7 +7,7 @@ export {
   hasInvalidInput,
   changebuttonState,
 };
-import { profileBtn, addCardBtn, profileUserImage, changeAvatarBtn } from "./utils";
+import { profileBtn, addCardBtn, changeAvatarBtn } from "./utils";
 // !  ПОКАЗАТЬ ОШИБКУ
 const showInputError = (formType, inputType, errorMessage, objectValid) => {
   const errorType = formType.querySelector(`.${inputType.id}-error`);
@@ -88,7 +88,7 @@ function enableValidation(objectValid) {
   });
 }
 
-// ! ПРОВЕРКА МАССИВА ПОЛЕЙ ФОМЫ НА ВАЛИДНОСТЬ
+// ! ПРОВЕРКА ВСЕХ ПОЛЕЙ ФОРМЫ НА ВАЛИДНОСТЬ
 function hasInvalidInput(inputList) {
   return inputList.some((inputType) => {
     return !inputType.validity.valid;
