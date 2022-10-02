@@ -25,8 +25,12 @@ export {
   formAvatar,
   changeAvatarBtn,
   submitBtns,
- };
-
+  renderLoading,
+  setUserInfo,
+  handleLikeCard,
+  handleDeleteCard,
+};
+import { deleteUserCard, pushLike, deleteLike } from "./api";
 const profileUserImage = document.querySelector(".profile__user-image");
 const changeAvatarBtn = document.querySelector(".profile__change-image-btn");
 const submitBtns = document.querySelectorAll(".form__button");
@@ -59,4 +63,51 @@ const validationConfig = {
   submitButtonSelector: ".form__button",
   inputErrorClass: "form__item_type_error",
   errorClass: "form__input-error_active",
+};
+// ОТОБРАЖЕНИЕ ЗАГРУЗКИ ДАННЫХ НА СЕРВЕР
+function renderLoading(isLoading) {
+  if (isLoading) {
+    submitBtns.forEach(
+      (submitBtn) => (submitBtn.textContent = "Сохранение...")
+    );
+  } else {
+    submitBtns.forEach((submitBtn) => (submitBtn.textContent = "Сохранить"));
+  }
+}
+// УСТАНОВКА ДАННЫХ ПОЛЬЗОВАТЕЛЯ
+function setUserInfo(name, status) {
+  userName.textContent = name;
+  userStatus.textContent = status;
+}
+
+function handleLikeCard(button, count, id) {
+  if (!button.classList.contains("photo-grid__like-button_active")) {
+    pushLike(id)
+      .then((res) => {
+        button.classList.add("photo-grid__like-button_active");
+        count.textContent++;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } else {
+    deleteLike(id)
+      .then((res) => {
+        button.classList.remove("photo-grid__like-button_active");
+        count.textContent--;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+}
+
+function handleDeleteCard(card, id) {
+  deleteUserCard(id)
+    .then((res) => {
+      card.remove();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
