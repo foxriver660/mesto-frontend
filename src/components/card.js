@@ -30,11 +30,11 @@ function createCard(initialCard) {
   cardElementImage.src = initialCard.link;
   cardElementImage.alt = initialCard.name;
   cardElementId = initialCard._id;
-  // СЛУЩАТЕЛЬ ЛАЙК КНОПКИ
+  // СЛУШАТЕЛЬ ЛАЙК КНОПКИ С ХЭНДЛЕРОМ ЛАЙКА
   setEventListeners(cardElementLikeBtn, () =>
     handleLikeCard(cardElementLikeBtn, cardElementLikeCount, cardElementId)
   );
-  // СЛУШАТЕЛЬ ДЕЛИТ КНОПКИ
+  // СЛУШАТЕЛЬ ДЕЛИТ КНОПКИ С ХЭНДЛЕРОМ УДАЛЕНИЯ
   setEventListeners(cardElementDeleteBtn, () =>
     handleDeleteCard(cardElement, cardElementId)
   );
