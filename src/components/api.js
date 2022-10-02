@@ -18,20 +18,20 @@ const config = {
 };
 
 // ПРОВЕРКА СТАТУСА ОТВЕТА ОТ СЕРВЕРА
-const connectServer = (res) => {return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)}
+const responseServer = (res) => {return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)}
 
 // !++++++++ЗАПРОС КАРТОЧЕК С СЕРВЕРА И ИХ ДОБАВЛЕНИЕ
 const getCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers,
-  }).then(res => connectServer(res));
+  }).then(res => responseServer(res));
 };
 
 // !+++++++++ЗАПРОС ДАННЫХ О ПОЛЬЗОВАТЕЛЕ С СЕРВЕРА И ЗАГРУЗКА В ДОМ
 const getUserInfo = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers,
-  }).then(res => connectServer(res));;
+  }).then(res => responseServer(res));;
 };
 
 // !+++++++ЗАМЕНА ДАННЫХ О ПОЛЬЗОВАТЕЛЕ НА СЕРВЕРЕ
@@ -43,7 +43,7 @@ const updateUserProfile = (name, about) => {
       name: name,
       about: about,
     }),
-  }).then(res => connectServer(res));
+  }).then(res => responseServer(res));
 };
 // !+++++++ЗАМЕНА АВАТАРА ПОЛЬЗОВАТЕЛЯ НА СЕРВЕРЕ
 const updateUserAvatar = (avatarURL) => {
@@ -53,18 +53,18 @@ const updateUserAvatar = (avatarURL) => {
     body: JSON.stringify({
       avatar: avatarURL,
     }),
-  }).then(res => connectServer(res));
+  }).then(res => responseServer(res));
 };
 // !++++++++++++ЗАГРУЗКА КАРТОЧКИ ДОБАВЛЕННОЙ ПОЛЬЗОВАТЕЛЕМ
-const updateUserCard = (name, link) => {
+const updateUserCard = (card) => {
   return fetch(`${config.baseUrl}/cards`, {
     method: "POST",
     headers: config.headers,
     body: JSON.stringify({
-      name: name,
-      link: link,
+      name: card.name,
+      link: card.link,
     }),
-  }).then(res => connectServer(res));
+  }).then(res => responseServer(res));
 };
 
 // !+++++++++++++++++УДАЛЕНИЕ КАРТОЧКИ С СЕРВЕРА
@@ -75,7 +75,7 @@ const deleteUserCard = (cardId) => {
     body: JSON.stringify({
       _id: cardId,
     }),
-  }).then(res => connectServer(res));
+  }).then(res => responseServer(res));
 }
 
 // !+++++++++++++++++ДОБАВЛЕНИЕ ЛАЙКА НА СЕРВЕР
@@ -86,7 +86,7 @@ const pushLike = (cardId) => {
     body: JSON.stringify({
       likes: `like`,
     }),
-  }).then(res => connectServer(res));
+  }).then(res => responseServer(res));
 }
 
 // !+++++++++++++++++УДАЛЕНИЕ ЛАЙКА С СЕРВЕРА
@@ -97,7 +97,7 @@ const deleteLike = (cardId) => {
     body: JSON.stringify({
       likes: `like`,
     }),
-  }).then(res => connectServer(res));
+  }).then(res => responseServer(res));
 }
 
 

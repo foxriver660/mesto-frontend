@@ -1,7 +1,6 @@
 export { createCard, checkForDeletion, checkForUserLike };
-import { photoTemplate } from "./utils";
+import { photoTemplate, handleLikeCard, handleDeleteCard } from "./utils";
 import { openImagePopup } from "./modal";
-import { deleteUserCard, pushLike, deleteLike } from "./api";
 
 // ! СОЗДАНИЕ ТЕМПЛЕЙТА КАРТОЧКИ
 function getTemplate() {
@@ -13,8 +12,8 @@ function setEventListeners(element, callback) {
 }
 // ! СОЗДАНИЕ НОВОЙ КАРТОЧКИ
 function createCard(initialCard) {
-  let cardElementId = "";
   const cardElement = getTemplate();
+  let cardElementId = "";
   const cardElementImage = cardElement.querySelector(".photo-grid__image");
   const cardElementName = cardElement.querySelector(".photo-grid__place-name");
   const cardElementLikeBtn = cardElement.querySelector(
@@ -31,57 +30,31 @@ function createCard(initialCard) {
   cardElementImage.src = initialCard.link;
   cardElementImage.alt = initialCard.name;
   cardElementId = initialCard._id;
-  // ЛАЙК КНОПКА
-  setEventListeners(cardElementLikeBtn, (evt) => {
-    if (
-      !cardElementLikeBtn.classList.contains("photo-grid__like-button_active")
-    ) {
-      pushLike(cardElementId)
-        .then((res) => {
-          evt.target.classList.add("photo-grid__like-button_active");
-          cardElementLikeCount.textContent++;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      deleteLike(cardElementId)
-        .then((res) => {
-          evt.target.classList.remove("photo-grid__like-button_active");
-          cardElementLikeCount.textContent--;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  });
-  // ДЕЛИТ КНОПКА
-  setEventListeners(cardElementDeleteBtn, () => {
-    deleteUserCard(cardElementId)
-      .then((res) => {
-        cardElement.remove();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
+  // СЛУЩАТЕЛЬ ЛАЙК КНОПКИ
+  setEventListeners(cardElementLikeBtn, () =>
+    handleLikeCard(cardElementLikeBtn, cardElementLikeCount, cardElementId)
+  );
+  // СЛУШАТЕЛЬ ДЕЛИТ КНОПКИ
+  setEventListeners(cardElementDeleteBtn, () =>
+    handleDeleteCard(cardElement, cardElementId)
+  );
   // СЛУШАТЕЛЬ ОТКРЫТИЯ ФУУЛ САЙЗ ИЗОБРАЖЕНИЯ
   setEventListeners(cardElementImage, () => openImagePopup(initialCard));
 
   return cardElement;
 }
 
-// СВЕРКА ID ПОЛЬЗОВАТЕЛЯ и ID СОЗДАТЕЛЯ КАРТОЧКИ
+// СВЕРКА ID ПОЛЬЗОВАТЕЛЯ и ID СОЗДАТЕЛЯ КАРТОЧКИ (DELETE)
 function checkForDeletion(card, user) {
   const cardDeleteBtn = document.querySelector(".photo-grid__delete-button");
-  if (!(card.owner._id == user)) {
+  if (!(card.owner._id === user)) {
     cardDeleteBtn.classList.add("photo-grid__delete-button_disabled");
   }
 }
-// СВЕРКА ID ПОЛЬЗОВАТЕЛЯ и ID ЛАЙКА КАРТОЧКИ
-function checkForUserLike(cardLike, user) {
+// СВЕРКА ID ПОЛЬЗОВАТЕЛЯ и ID ЛАЙКА ПОЛЬЗОВАТЕЛЯ
+function checkForUserLike(card, user) {
   const cardLikeBtn = document.querySelector(".photo-grid__like-button");
-  if (cardLike._id == user) {
+  if (card._id === user) {
     cardLikeBtn.classList.add("photo-grid__like-button_active");
   }
 }

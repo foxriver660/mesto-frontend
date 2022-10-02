@@ -14,8 +14,6 @@ import {
   addCardBtn,
   closeBtns,
   formProfile,
-  userName,
-  userStatus,
   formPlace,
   nameInput,
   jobInput,
@@ -120,28 +118,31 @@ function addCard(initialCard) {
   photoContainer.prepend(createCard(initialCard));
 }
 // ! ДОБАВЛЕНИЕ НОВОЙ КАРТОЧКИ ИЗ ПОПАПА и ОТПРАВКА НА СЕРВ
-function handleAddformSubmit(evt) {
+function handlePlaceFormSubmit(evt) {
   evt.preventDefault();
   const placeValue = placeInput.value;
   const placeUrlValue = placeUrlInput.value;
   const newUserCard = { name: placeValue, link: placeUrlValue, likes: [] };
   // апдейт карточки на сервере
-  updateUserCard(placeValue, placeUrlValue)
-    .then((res) => {
+  updateUserCard(newUserCard)
+    .then((dataCard) => {
+      newUserCard._id = dataCard._id;
       addCard(newUserCard);
       closePopup(addPlacePopup);
     })
+
     .catch((err) => {
       console.log(err);
     })
     .finally((res) => {
       renderLoading(false);
     });
+
   renderLoading(true);
   evt.target.reset();
 }
 // СЛУШАТЕЛЬ САБМИТА ПОПАПА ДОБАВЛЕНИЯ КАРТОЧКИ
-formPlace.addEventListener("submit", handleAddformSubmit);
+formPlace.addEventListener("submit", handlePlaceFormSubmit);
 
 //-----ВЫЗОВ ЕДИНОЙ ФУНКЦИИ ВАЛИДАЦИИ------
 enableValidation(validationConfig);

@@ -17,7 +17,6 @@ import {
   imagePopup,
   placeNamePopup,
   avatarPopup,
-  profileUserImage,
   avatarInput
 } from "./utils";
 
