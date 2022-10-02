@@ -33,33 +33,22 @@ function createCard(initialCard) {
   cardElementId = initialCard._id;
   // ЛАЙК КНОПКА
   setEventListeners(cardElementLikeBtn, (evt) => {
-    
     if (
-      !cardElementLikeBtn.classList.contains("photo-grid__like-button_active") 
+      !cardElementLikeBtn.classList.contains("photo-grid__like-button_active")
     ) {
-      
       pushLike(cardElementId)
         .then((res) => {
-          if (res.ok) {
-            evt.target.classList.add("photo-grid__like-button_active");
-            cardElementLikeCount.textContent++;
-          } else {
-            return Promise.reject(`Ошибка: ${res.status}`);
-          }
+          evt.target.classList.add("photo-grid__like-button_active");
+          cardElementLikeCount.textContent++;
         })
         .catch((err) => {
           console.log(err);
         });
-        
     } else {
       deleteLike(cardElementId)
         .then((res) => {
-          if (res.ok) {
-            evt.target.classList.remove("photo-grid__like-button_active");
-            cardElementLikeCount.textContent--;
-          } else {
-            return Promise.reject(`Ошибка: ${res.status}`);
-          }
+          evt.target.classList.remove("photo-grid__like-button_active");
+          cardElementLikeCount.textContent--;
         })
         .catch((err) => {
           console.log(err);
@@ -70,11 +59,7 @@ function createCard(initialCard) {
   setEventListeners(cardElementDeleteBtn, () => {
     deleteUserCard(cardElementId)
       .then((res) => {
-        if (res.ok) {
-          cardElement.remove();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
+        cardElement.remove();
       })
       .catch((err) => {
         console.log(err);

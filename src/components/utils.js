@@ -25,6 +25,8 @@ export {
   formAvatar,
   changeAvatarBtn,
   submitBtns,
+  renderLoading,
+  setUserInfo
  };
 
 const profileUserImage = document.querySelector(".profile__user-image");
@@ -59,4 +61,18 @@ const validationConfig = {
   submitButtonSelector: ".form__button",
   inputErrorClass: "form__item_type_error",
   errorClass: "form__input-error_active",
+}
+// ОТОБРАЖЕНИЕ ЗАГРУЗКИ ДАННЫХ НА СЕРВЕР
+function renderLoading(isLoading) {
+  if (isLoading) {
+    submitBtns.forEach(
+      (submitBtn) => (submitBtn.textContent = "Сохранение...")
+    );
+  } else {
+    submitBtns.forEach((submitBtn) => (submitBtn.textContent = "Сохранить"));
+  }
+}
+function setUserInfo(name, status){
+  userName.textContent = name;
+userStatus.textContent = status;
 }

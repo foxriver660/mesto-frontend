@@ -31,36 +31,23 @@ import {
 } from "./utils";
 import {
   getCards,
-  getUserID,
+  getUserInfo,
   updateUserProfile,
   updateUserAvatar,
   updateUserCard,
-  renderLoading,
 } from "./api";
+import { renderLoading, setUserInfo } from "./utils";
 export { addCard };
 
 // СЕРВЕР: инициализация данных пользователя
 function updateData() {
-  getUserID()
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+  getUserInfo()
     .then((data) => {
       const usedId = data._id;
-      userName.textContent = data.name;
-      userStatus.textContent = data.about;
+      setUserInfo(data.name, data.about);
       profileUserImage.src = data.avatar;
       // СЕРВЕР: закрузка карточек после загрузки данных пользователя
       getCards()
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          }
-          return Promise.reject(`Ошибка: ${res.status}`);
-        })
         .then((dataCards) => {
           dataCards.reverse().forEach((dataCard) => {
             addCard(dataCard);
@@ -91,16 +78,12 @@ changeAvatarBtn.addEventListener("click", () => openAvatarPopup(avatarPopup));
 // ! ЗАМЕНА ДАННЫХ ВВЕДЕНЫХ ПОЛЬЗОВАТЕЛЕМ В ПРОФИЛЕ
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  userName.textContent = nameInput.value;
-  userStatus.textContent = jobInput.value;
+
   // апдейт профиля на сервере
   updateUserProfile(nameInput.value, jobInput.value)
     .then((res) => {
-      if (res.ok) {
-        closePopup(profilePopup);
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
+      setUserInfo(nameInput.value, jobInput.value);
+      closePopup(profilePopup);
     })
     .catch((err) => {
       console.log(err);
@@ -116,14 +99,10 @@ formProfile.addEventListener("submit", handleProfileFormSubmit);
 //  ! ЗАМЕНА АВАТРА ПОЛЬЗОВАТЕЛЯ В ПРОФИЛЕ
 function handleAvatarFormSubmit(evt) {
   evt.preventDefault();
-  profileUserImage.src = avatarInput.value;
   updateUserAvatar(avatarInput.value)
     .then((res) => {
-      if (res.ok) {
-        closePopup(avatarPopup);
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
+      profileUserImage.src = avatarInput.value;
+      closePopup(avatarPopup);
     })
     .catch((err) => {
       console.log(err);
@@ -149,33 +128,15 @@ function handleAddformSubmit(evt) {
   // апдейт карточки на сервере
   updateUserCard(placeValue, placeUrlValue)
     .then((res) => {
-      if (res.ok) {
-        closePopup(addPlacePopup);
-        // получение ID новой карточки
-       getCards()
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          }
-          return Promise.reject(`Ошибка: ${res.status}`);
-        })
-        .then((dataCards) => {
-          newUserCard._id = dataCards[0]._id
-          addCard(newUserCard);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
+      addCard(newUserCard);
+      closePopup(addPlacePopup);
     })
     .catch((err) => {
       console.log(err);
     })
     .finally((res) => {
       renderLoading(false);
-         });
+    });
   renderLoading(true);
   evt.target.reset();
 }

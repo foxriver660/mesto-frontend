@@ -1,18 +1,13 @@
-import {
-  submitBtns,
-} from "./utils";
-
 export {
   deleteUserCard,
   pushLike,
   deleteLike,
   getCards,
-  getUserID,
+  getUserInfo,
   updateUserProfile,
   updateUserAvatar,
   updateUserCard,
-  renderLoading,
- };
+   };
 
 const config = {
   baseUrl: "https://mesto.nomoreparties.co/v1/plus-cohort-15",
@@ -22,18 +17,21 @@ const config = {
   },
 };
 
+// ПРОВЕРКА СТАТУСА ОТВЕТА ОТ СЕРВЕРА
+const connectServer = (res) => {return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)}
+
 // !++++++++ЗАПРОС КАРТОЧЕК С СЕРВЕРА И ИХ ДОБАВЛЕНИЕ
 const getCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers,
-  });
+  }).then(res => connectServer(res));
 };
 
 // !+++++++++ЗАПРОС ДАННЫХ О ПОЛЬЗОВАТЕЛЕ С СЕРВЕРА И ЗАГРУЗКА В ДОМ
-const getUserID = () => {
+const getUserInfo = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers,
-  });
+  }).then(res => connectServer(res));;
 };
 
 // !+++++++ЗАМЕНА ДАННЫХ О ПОЛЬЗОВАТЕЛЕ НА СЕРВЕРЕ
@@ -45,7 +43,7 @@ const updateUserProfile = (name, about) => {
       name: name,
       about: about,
     }),
-  });
+  }).then(res => connectServer(res));
 };
 // !+++++++ЗАМЕНА АВАТАРА ПОЛЬЗОВАТЕЛЯ НА СЕРВЕРЕ
 const updateUserAvatar = (avatarURL) => {
@@ -55,7 +53,7 @@ const updateUserAvatar = (avatarURL) => {
     body: JSON.stringify({
       avatar: avatarURL,
     }),
-  });
+  }).then(res => connectServer(res));
 };
 // !++++++++++++ЗАГРУЗКА КАРТОЧКИ ДОБАВЛЕННОЙ ПОЛЬЗОВАТЕЛЕМ
 const updateUserCard = (name, link) => {
@@ -66,7 +64,7 @@ const updateUserCard = (name, link) => {
       name: name,
       link: link,
     }),
-  });
+  }).then(res => connectServer(res));
 };
 
 // !+++++++++++++++++УДАЛЕНИЕ КАРТОЧКИ С СЕРВЕРА
@@ -77,7 +75,7 @@ const deleteUserCard = (cardId) => {
     body: JSON.stringify({
       _id: cardId,
     }),
-  });
+  }).then(res => connectServer(res));
 }
 
 // !+++++++++++++++++ДОБАВЛЕНИЕ ЛАЙКА НА СЕРВЕР
@@ -88,7 +86,7 @@ const pushLike = (cardId) => {
     body: JSON.stringify({
       likes: `like`,
     }),
-  });
+  }).then(res => connectServer(res));
 }
 
 // !+++++++++++++++++УДАЛЕНИЕ ЛАЙКА С СЕРВЕРА
@@ -99,17 +97,8 @@ const deleteLike = (cardId) => {
     body: JSON.stringify({
       likes: `like`,
     }),
-  });
+  }).then(res => connectServer(res));
 }
 
 
-// ОТОБРАЖЕНИЕ ЗАГРУЗКИ ДАННЫХ НА СЕРВЕР
-function renderLoading(isLoading) {
-  if (isLoading) {
-    submitBtns.forEach(
-      (submitBtn) => (submitBtn.textContent = "Сохранение...")
-    );
-  } else {
-    submitBtns.forEach((submitBtn) => (submitBtn.textContent = "Сохранить"));
-  }
-}
+
