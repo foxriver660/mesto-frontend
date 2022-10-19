@@ -57,6 +57,14 @@ const photoContainer = document.querySelector(".photo-grid");
 const imagePopup = document.querySelector(".photo-grid__image_popup");
 const placeNamePopup = document.querySelector(".photo-grid__place-name_popup");
 
+const config = {
+  baseUrl: "https://mesto.nomoreparties.co/v1/plus-cohort-15",
+  headers: {
+    authorization: "a80c9fc1-0c23-4d33-8f6c-044abe54b54c",
+    "Content-Type": "application/json",
+  },
+};
+
 const validationConfig = {
   formSelector: ".form",
   inputSelector: ".form__item",
