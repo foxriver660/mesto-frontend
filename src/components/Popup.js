@@ -26,6 +26,7 @@ export default class Popup {
       this.closePopup();
     }
   }
+  
   setEventListener() {
     this._popup.addEventListener("mousedown", this._handleClose);
     // ДОБАВЛЕНИЕ СЛУШАТЕЛЯ НА ESC
