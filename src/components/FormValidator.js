@@ -1,13 +1,14 @@
-export {
-  showInputError,
-  hideInputError,
-  isValid,
-  setEventListeners,
-  enableValidation,
-  hasInvalidInput,
-  changebuttonState,
-};
-import { profileBtn, addCardBtn, changeAvatarBtn } from "./utils";
+export default class FormValidator {
+  constructor({formSelector, inputSelector, submitButtonSelector, inputErrorClass, errorClass}, form) {
+    this._formSelector = formSelector;
+    this._inputSelector = inputSelector;
+    this._submitButtonSelector = submitButtonSelector;
+    this._inputErrorClass = inputErrorClass;
+    this._errorClass = errorClass;
+    this._form = form;
+  }
+}
+
 // !  ПОКАЗАТЬ ОШИБКУ
 const showInputError = (formType, inputType, errorMessage, objectValid) => {
   const errorType = formType.querySelector(`.${inputType.id}-error`);

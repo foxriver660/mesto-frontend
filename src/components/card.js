@@ -127,9 +127,9 @@ export default class Card {
 //   return photoTemplate.querySelector(".photo-grid__item").cloneNode(true);
 // }
 // ! ОБЩАЯ ФУНКЦИЯ ЦСТАНОВКИ СЛУШАТЕЛЕЙ НА ЭЛЕМЕНТЫ КНОПКИ
-function setEventListeners(element, callback) {
+/* function setEventListeners(element, callback) {
   element.addEventListener("click", callback);
-}
+} */
 // ! СОЗДАНИЕ НОВОЙ КАРТОЧКИ
 // function createCard(initialCard) {
 //   const cardElement = getTemplate();

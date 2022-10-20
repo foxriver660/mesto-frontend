@@ -1,6 +1,6 @@
 import "../index.css";
-import { enableValidation } from "./validate";
-import { createCard, checkForDeletion, checkForUserLike } from "./card";
+import { enableValidation } from "./FormValidator";
+import { createCard, checkForDeletion, checkForUserLike } from "./Card";
 import {
   closePopup,
   openPopup,
@@ -33,7 +33,7 @@ import {
   updateUserProfile,
   updateUserAvatar,
   updateUserCard,
-} from "./api";
+} from "./Api";
 import { renderLoading, setUserInfo } from "./utils";
 export { addCard };
 
