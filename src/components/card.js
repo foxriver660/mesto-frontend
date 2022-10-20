@@ -1,13 +1,23 @@
 export default class Card {
-  constructor(selector, container, { name, likes, link, _id, owner }) {
+  constructor(
+    selector,
+    usedId,
+    data,
+    hadleDeleteCard,
+    handleAddLike,
+    handleOpenPopup
+  ) {
     this._selector = selector;
-    this._container = container;
-    this._cardName = name;
-    this._likesCount = likes.length;
-    this._imageLink = link;
-    this._imageDescription = name;
-    this._id = _id;
-    this._ownerId = owner._id;
+    this._cardName = data.name;
+    this._likes = data.likes;
+    this._imageLink = data.link;
+    this._imageDescription = data.name;
+    this._cardId = data._id;
+    this._owner = data.owner;
+    this._userId = usedId;
+    this._hadleDeleteCard = hadleDeleteCard;
+    this._handleAddLike = handleAddLike;
+    this._handleOpenPopup = handleOpenPopup;
   }
   _getElement() {
     const cardElement = document
@@ -17,27 +27,46 @@ export default class Card {
     return cardElement;
   }
 
-  _checkForDeletion(ownerId, userId, deleteBtn) {
-    if (!(ownerId === userId)) {
-      deleteBtn.classList.add("photo-grid__delete-button_disabled");
+  _isLiked() {
+    return this._likes.some((item) => {
+      item._id === this._userId
+    })
+  }
+
+  _setLike() {
+    this._likeCounter.textContent = this._likes.length;
+    this._isLiked() ? this._likeBtn.classList.add('.photo-grid__like-button_active') : this._likeBtn.classList.remove('.photo-grid__like-button_active');
+  }
+
+  toggleLike(likeData) {
+    this._likes = likeData.likes;
+    this._setLike();
+  }
+
+  _checkForDeletion() {
+    if (!(this._owner._id === this._userId)) {
+      this._deleteBtn.classList.add("photo-grid__delete-button_disabled");
     }
   }
 
-  _checkForUserLike(ownerId, userId, likeBtn) {
-    if (ownerId === userId) {
-      likeBtn.classList.add("photo-grid__like-button_active");
-    }
-  }
-
+  // КОЛЛБЕК ЛИСТЕНЕРОВ ВЕРНУТСЯ
   _setEventListeners() {
-    this._element.addEventListener("click", () => {});
-
-    this._element.addEventListener("click", () => {});
+    this._likeBtn.addEventListener("click", () => this._handleAddLike(this.__isLiked(), this._cardId));
+    this._deleteBtn.addEventListener("click", () =>  this._hadleDeleteCard(this._cardId));
+    this._cardImage.addEventListener("click", () => this._handleOpenPopup({link:this._imageLink, name:this._cardName}));    
   }
   // !---------
-  // _handleLikeCard(button, count, id) {
+  // _handleLikeCard(isLiked, cardId) => {
+/* api.setLike(isLiked, cardId)
+.then((cardData) => {
+  card.toggleLike(cardData)
+})
+ */
+
+
+
   //   if (!button.classList.contains("photo-grid__like-button_active")) {
-      
+
   //     pushLike(id)
   //       .then((res) => {
   //         button.classList.add("photo-grid__like-button_active");
@@ -69,29 +98,26 @@ export default class Card {
   // }
   generate() {
     this._element = this._getElement();
-    const cardElementImage = this._element.querySelector(".photo-grid__image");
-    const cardElementName = this._element.querySelector(
-      ".photo-grid__place-name"
-    );
 
-    const cardElementLikeCount = this._element.querySelector(
-      ".photo-grid__like-count"
-    );
-    cardElementName.textContent = this._cardName;
-    cardElementLikeCount.textContent = this._likesCount;
-    cardElementImage.src = this._imageLink;
-    cardElementImage.alt = this._imageDescription;
-    let cardElementId = this._id;
+    this._likeBtn = this._element.querySelector(".photo-grid__like-button");
 
-    const cardElementLikeBtn = this._element.querySelector(
-      ".photo-grid__like-button"
-    );
-    const cardElementDeleteBtn = this._element.querySelector(
-      ".photo-grid__delete-button"
-    );
-    this._checkForDeletion(this._ownerId, user, cardElementDeleteBtn);
-    this._checkForUserLike(this._ownerId, user, cardElementLikeBtn);
+    this._deleteBtn = this._element.querySelector(".photo-grid__delete-button");
 
+    this._likeCounter = this._element.querySelector(".photo-grid__like-count");
+
+    this._cardImage = this._element.querySelector(".photo-grid__image");
+
+    this._element.querySelector(".photo-grid__place-name").textContent =
+      this._cardName;      
+    
+    this._element.querySelector(".photo-grid__image").alt =
+      this._imageDescription;
+
+    this._cardImage.src = this._imageLink;
+
+    this._checkForDeletion();
+    this._setLike();
+    this._setEventListeners()
     return this._element;
   }
 }

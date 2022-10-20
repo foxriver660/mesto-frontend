@@ -1,21 +1,3 @@
-/* export {
-  deleteUserCard,
-  pushLike,
-  deleteLike,
-  getCards,
-  getUserInfo,
-  updateUserProfile,
-  updateUserAvatar,
-  updateUserCard,
-}; */
-
-/* const config = {
-  baseUrl: "https://mesto.nomoreparties.co/v1/plus-cohort-15",
-  headers: {
-    authorization: "a80c9fc1-0c23-4d33-8f6c-044abe54b54c",
-    "Content-Type": "application/json",
-  },
-}; */
 
 export default class Api {
   constructor({ baseURL, headers }) {
@@ -82,29 +64,24 @@ export default class Api {
       body: JSON.stringify({
         _id: cardId,
       }),
-    }).then((res) => this._responseServer(res));
+    }).then(this._responseServer);
   }
 
   // !+++++++++++++++++ДОБАВЛЕНИЕ ЛАЙКА НА СЕРВЕР
-  pushLike(cardId) {
+  /* pushLike(cardId) {
     return fetch(`${this._baseURL}/cards/likes/${cardId}`, {
       method: "PUT",
       headers: this._headers,
-      body: JSON.stringify({
-        likes: `like`,
-      }),
-    }).then(this._responseServer(res));
-  }
+      
+    }).then(this._responseServer);
+  } */
 
-  // !+++++++++++++++++УДАЛЕНИЕ ЛАЙКА С СЕРВЕРА
-  deleteLike(cardId) {
+  // !+++++++++++++++++УСТАНОВКА ЛАЙКА
+  setLike(isLiked, cardId) {
     return fetch(`${this._baseURL}/cards/likes/${cardId}`, {
-      method: "DELETE",
-      headers: this._headers,
-      body: JSON.stringify({
-        likes: `like`,
-      }),
-    }).then(this._responseServer(res));
+      method: isLiked ? "DELETE" : "PUT",
+      headers: this._headers,      
+    }).then(this._responseServer);
   }
 }
 

@@ -30,7 +30,7 @@ export {
   handleLikeCard,
   handleDeleteCard,
 };
-import { deleteUserCard, pushLike, deleteLike } from "./api";
+import { deleteUserCard, pushLike, deleteLike } from "./Api";
 const profileUserImage = document.querySelector(".profile__user-image");
 const changeAvatarBtn = document.querySelector(".profile__change-image-btn");
 const submitBtns = document.querySelectorAll(".form__button");
