@@ -24,15 +24,11 @@ export default class Card {
       .cloneNode(true);
   }
 
-  _isLiked() {
-    console.log(this._likes);
-    return this._likes.some((item) => {
-      item._id === this._userId;
-    });
+  _isLiked() {    
+    return this._likes.some((item) => item._id === this._userId);
   }
 
-  _setLike() {
-    console.log(this._isLiked());
+  _setLike() {    
     this._likeCounter.textContent = this._likes.length;
     this._isLiked()
       ? this._likeBtn.classList.add("photo-grid__like-button_active")
