@@ -14,7 +14,7 @@ export default class Api {
       headers: this._headers,
     }).then(this._responseServer);
   }
-  
+
   // !+++++++++ЗАПРОС ДАННЫХ О ПОЛЬЗОВАТЕЛЕ С СЕРВЕРА И ЗАГРУЗКА В ДОМ
   getUserInfo() {
     return fetch(`${this._baseURL}/users/me`, {

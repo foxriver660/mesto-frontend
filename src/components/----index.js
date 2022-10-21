@@ -1,41 +1,4 @@
-import "../index.css";
-import { enableValidation } from "./FormValidator";
-import { createCard, checkForDeletion, checkForUserLike } from "./Card";
-import {
-  closePopup,
-  openPopup,
-  openProfilePopup,
-  openAvatarPopup,
-} from "./modal";
-import {
-  profilePopup,
-  addPlacePopup,
-  profileBtn,
-  addCardBtn,
-  closeBtns,
-  formProfile,
-  formPlace,
-  nameInput,
-  jobInput,
-  placeInput,
-  placeUrlInput,
-  photoContainer,
-  validationConfig,
-  profileUserImage,
-  avatarPopup,
-  avatarInput,
-  formAvatar,
-  changeAvatarBtn,
-} from "./utils";
-import {
-  getCards,
-  getUserInfo,
-  updateUserProfile,
-  updateUserAvatar,
-  updateUserCard,
-} from "./Api";
-import { renderLoading, setUserInfo } from "./utils";
-export { addCard };
+
 
 // СЕРВЕР: инициализация данных пользователя
 function updateData() {
