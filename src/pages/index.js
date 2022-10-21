@@ -38,4 +38,19 @@ import UserInfo from "../components/UserInfo.js";
 
 const api = new Api(apiConfig);
 
-console.log(api)
+api.getCards().then((dataCards) => {
+  //console.log(dataCards);
+  const section = new Section(
+    {
+      items: dataCards,
+      renderer: (item) => {
+        const card = new Card("#photo-template", 123, item);
+        console.log(card);
+        const cardElement = card.generate();
+        section.addItem(cardElement);
+      },
+    },
+    ".photo-grid"
+  );
+  section.renderItems();
+});
