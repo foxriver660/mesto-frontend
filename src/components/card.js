@@ -3,7 +3,7 @@ export default class Card {
     selector,
     userId, //Подумать над sessionStorage
     data,
-    { /* hadleDeleteCard, */ handleLikeCard /* handleCardClick  */ }
+    { hadleDeleteCard, handleLikeCard /* handleCardClick  */ }
   ) {
     this._selector = selector;
     this._cardName = data.name;
@@ -12,7 +12,7 @@ export default class Card {
     this._cardId = data._id;
     this._owner = data.owner;
     this._userId = userId;
-    //this._hadleDeleteCard = hadleDeleteCard;
+    this._hadleDeleteCard = hadleDeleteCard;
     this._handleLikeCard = handleLikeCard;
     // this._handleCardClick = handleCardClick;
   }
@@ -24,15 +24,19 @@ export default class Card {
       .cloneNode(true);
   }
 
-  _isLiked() {    
+  _isLiked() {
     return this._likes.some((item) => item._id === this._userId);
   }
 
-  _setLike() {    
+  _setLike() {
     this._likeCounter.textContent = this._likes.length;
     this._isLiked()
       ? this._likeBtn.classList.add("photo-grid__like-button_active")
       : this._likeBtn.classList.remove("photo-grid__like-button_active");
+  }
+
+  removeCard(item) {    
+    item.remove();
   }
 
   toggleLike(likeData) {
@@ -51,9 +55,9 @@ export default class Card {
       this._handleLikeCard(this._isLiked(), this._cardId);
     });
 
-    /* this._deleteBtn.addEventListener("click", () => {
-      this._hadleDeleteCard(this._cardId);
-    }); */
+    this._deleteBtn.addEventListener("click", () => {
+      this._hadleDeleteCard(this._element, this._cardId);
+    });
 
     /* this._cardImage.addEventListener("click", () => {
       this._handleCardClick({ link: this._imageLink, name: this._cardName });

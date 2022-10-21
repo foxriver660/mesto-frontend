@@ -49,10 +49,14 @@ api.getCards().then((dataCards) => {
           "cad8a03ca13a025c7531dcf2",
           item,
           {
-            /* hadleDeleteCard: () => {}, */
+            hadleDeleteCard: (cardElement, cardId) => {
+              api.deleteUserCard(cardId).then((item) => {
+                card.removeCard(cardElement);
+              });
+            },
 
             handleLikeCard: (isLiked, cardId) => {
-              api.setLike(isLiked, cardId).then((item) => {                
+              api.setLike(isLiked, cardId).then((item) => {
                 card.toggleLike(item);
               });
             },
