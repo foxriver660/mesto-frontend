@@ -1,4 +1,4 @@
-export {
+/* export {
   closePopup,
   closeOverlayPopup,
   closeEscPopup,
@@ -18,7 +18,7 @@ import {
   placeNamePopup,
   avatarPopup,
   avatarInput
-} from "./utils";
+} from "./utils"; */
 
 
 // ! ФУНКЦИЯ ЗАКРЫТИЯ ПОПАПА
@@ -49,30 +49,30 @@ import {
   }
 } */
 // ! ОТКРЫТИЕ ПОПАПА
-function openPopup(popup) {
+/* function openPopup(popup) {
   popup.classList.add("popup_opened");
   // ДОБАВЛЕНИЕ СЛУШАТЕЛЯ НА ОВЕРЛЕЙ
   popup.addEventListener("mousedown", closeOverlayPopup);
   // ДОБАВЛЕНИЕ СЛУШАТЕЛЯ НА ESC
   document.addEventListener("keydown", closeEscPopup);
-  }
+  } */
 
 // ! ОТКРЫТИЕ ПОПАПА РЕДАКТИРОВАНИЯ ПРОФИЛЯ
-function openProfilePopup() {
+/* function openProfilePopup() {
   openPopup(profilePopup);
   nameInput.value = userName.textContent;
   jobInput.value = userStatus.textContent;
-}
+} */
 // ! ОТКРЫТИЕ ПОПАПА КАРТИНКИ ФУУЛ САЙЗ
-function openImagePopup(item) {
+/* function openImagePopup(item) {
   openPopup(uncoverImagePopup);
   imagePopup.src = item.link;
   imagePopup.alt = item.name;
   placeNamePopup.textContent = item.name;
-}
+} */
 
 // ! ОТКРЫТИЕ ПОПАПА РЕДАКТИРОВАНИЯ АВАТАРА
-function openAvatarPopup() {
+/* function openAvatarPopup() {
   openPopup(avatarPopup);
   avatarInput.value = '';
-  }
+  } */
