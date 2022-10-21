@@ -3,7 +3,7 @@ export default class Card {
     selector,
     userId, //Подумать над sessionStorage
     data,
-    { hadleDeleteCard, handleLikeCard /* handleCardClick  */ }
+    { hadleDeleteCard, handleLikeCard, handleCardClick  }
   ) {
     this._selector = selector;
     this._cardName = data.name;
@@ -14,7 +14,7 @@ export default class Card {
     this._userId = userId;
     this._hadleDeleteCard = hadleDeleteCard;
     this._handleLikeCard = handleLikeCard;
-    // this._handleCardClick = handleCardClick;
+    this._handleCardClick = handleCardClick;
   }
 
   _getElement() {
@@ -59,9 +59,9 @@ export default class Card {
       this._hadleDeleteCard(this._element, this._cardId);
     });
 
-    /* this._cardImage.addEventListener("click", () => {
+    this._cardImage.addEventListener("click", () => {
       this._handleCardClick({ link: this._imageLink, name: this._cardName });
-    }); */
+    });
   }
 
   generate() {

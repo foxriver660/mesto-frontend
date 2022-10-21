@@ -39,7 +39,7 @@ import UserInfo from "../components/UserInfo.js";
 const api = new Api(apiConfig);
 
 api.getCards().then((dataCards) => {
-  console.log(dataCards);
+  //console.log(dataCards);
   const section = new Section(
     {
       items: dataCards,
@@ -59,6 +59,12 @@ api.getCards().then((dataCards) => {
               api.setLike(isLiked, cardId).then((item) => {
                 card.toggleLike(item);
               });
+            },
+
+            handleCardClick: ({ link, name }) => {
+              const popupWithImage = new PopupWithImage(".open-image-popup");
+              popupWithImage.setEventListener();
+              popupWithImage.openPopup({link, name});              
             },
           }
         );

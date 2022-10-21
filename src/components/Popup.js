@@ -12,13 +12,13 @@ export default class Popup {
     this._popup.classList.add("popup_opened");
   }
 
-  _handleEscClose() {
+  _handleEscClose(evt) {
     if (evt.key === "Escape") {
       this.closePopup();
     }
   }
 
-  _handleClose() {
+  _handleClose(evt) {
     if (
       evt.target.classList.contains("popup_opened") ||
       evt.target.classList.contains("popup__close-button")
@@ -26,10 +26,10 @@ export default class Popup {
       this.closePopup();
     }
   }
-  
+
   setEventListener() {
-    this._popup.addEventListener("mousedown", this._handleClose);
+    this._popup.addEventListener("mousedown", (evt) => this._handleClose(evt));
     // ДОБАВЛЕНИЕ СЛУШАТЕЛЯ НА ESC
-    document.addEventListener("keydown", this._handleEscClose);
+    document.addEventListener("keydown", (evt) => this._handleEscClose(evt));
   }
 }
