@@ -39,13 +39,26 @@ import UserInfo from "../components/UserInfo.js";
 const api = new Api(apiConfig);
 
 api.getCards().then((dataCards) => {
-  //console.log(dataCards);
+  console.log(dataCards);
   const section = new Section(
     {
       items: dataCards,
       renderer: (item) => {
-        const card = new Card("#photo-template", 123, item);
-        console.log(card);
+        const card = new Card(
+          "#photo-template",
+          "cad8a03ca13a025c7531dcf2",
+          item,
+          {
+            /* hadleDeleteCard: () => {}, */
+
+            handleLikeCard: (isLiked, cardId) => {
+              api.setLike(isLiked, cardId).then((item) => {                
+                card.toggleLike(item);
+              });
+            },
+          }
+        );
+        //console.log(card);
         const cardElement = card.generate();
         section.addItem(cardElement);
       },
