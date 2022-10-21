@@ -24,7 +24,7 @@ const photoContainer = document.querySelector(".photo-grid");
 const imagePopup = document.querySelector(".photo-grid__image_popup");
 const placeNamePopup = document.querySelector(".photo-grid__place-name_popup");
 
-const config = {
+const apiConfig = {
   baseUrl: "https://mesto.nomoreparties.co/v1/plus-cohort-15",
   headers: {
     authorization: "a80c9fc1-0c23-4d33-8f6c-044abe54b54c",
@@ -38,4 +38,34 @@ const validationConfig = {
   submitButtonSelector: ".form__button",
   inputErrorClass: "form__item_type_error",
   errorClass: "form__input-error_active",
+};
+
+export {
+  profileUserImage,
+  changeAvatarBtn,
+  submitBtns,
+  popups,
+  profilePopup,
+  addPlacePopup,
+  avatarPopup,
+  uncoverImagePopup,
+  profileBtn,
+  addCardBtn,
+  closeBtns,
+  formProfile,
+  userName,
+  userStatus,
+  formPlace,
+  formAvatar,
+  nameInput,
+  avatarInput,
+  jobInput,
+  placeInput,
+  placeUrlInput,
+  photoTemplate,
+  photoContainer,
+  imagePopup,
+  placeNamePopup,
+  apiConfig,
+  validationConfig,
 };

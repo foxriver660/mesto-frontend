@@ -1,6 +1,6 @@
 export default class Api {
-  constructor({ baseURL, headers }) {
-    this._baseURL = baseURL;
+  constructor({ baseUrl, headers }) {
+    this._baseUrl = baseUrl;
     this._headers = headers;
   }
   // ПРОВЕРКА СТАТУСА ОТВЕТА ОТ СЕРВЕРА
