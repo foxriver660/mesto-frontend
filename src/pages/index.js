@@ -92,10 +92,13 @@ getInfo()
 
 const popupProfile = new PopupWithForm(".profile-popup", {
   callbackFormSubmit: (data) =>
-    api.updateUserProfile({ name: data[0], about: data[1] }).then((res) => {
-      currentUser.setUserInfo(res);
-      popupProfile.close();
-    }),
+    api
+      .updateUserProfile({ name: data[0], about: data[1] })
+      .then((res) => {
+        currentUser.setUserInfo(res);
+        popupProfile.close();
+      })
+      .catch((err) => console.log(err)),
 });
 profileBtn.addEventListener("click", () => {
   popupProfile.openPopup();
@@ -110,10 +113,13 @@ profileValidation.enableValidation();
 
 const popupAvatar = new PopupWithForm(".change-avatar-popup", {
   callbackFormSubmit: (data) =>
-    api.updateUserAvatar({ link: data[0] }).then((res) => {
-      currentUser.setUserInfo(res);
-      popupAvatar.close();
-    }),
+    api
+      .updateUserAvatar({ link: data[0] })
+      .then((res) => {
+        currentUser.setUserInfo(res);
+        popupAvatar.close();
+      })
+      .catch((err) => console.log(err)),
 });
 changeAvatarBtn.addEventListener("click", () => {
   popupAvatar.openPopup();
@@ -125,10 +131,13 @@ avatarValidation.enableValidation();
 
 const popupCard = new PopupWithForm(".add-place-popup", {
   callbackFormSubmit: (data) =>
-    api.updateUserCard({ name: data[0], link: data[1] }).then((res) => {
-      section.addItem(createCard(res, "#photo-template"));
-      popupCard.close();
-    }),
+    api
+      .updateUserCard({ name: data[0], link: data[1] })
+      .then((res) => {
+        section.addItem(createCard(res, "#photo-template"));
+        popupCard.close();
+      })
+      .catch((err) => console.log(err)),
 });
 
 addCardBtn.addEventListener("click", () => {
