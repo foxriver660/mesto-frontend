@@ -45,7 +45,7 @@ const currentUser = new UserInfo(
 );
 
 const createCard = function (cardData, cardSelector) {
-  console.log(cardData)
+  console.log(cardData);
   const card = new Card(cardSelector, currentUser.userId, cardData, {
     hadleDeleteCard: (cardElement, cardId) => {
       api.deleteUserCard(cardId).then(() => {
@@ -72,15 +72,13 @@ function getInfo() {
   return Promise.all([api.getUserInfo(), api.getCards()]);
 }
 
-let section
-
 getInfo()
   .then(([userData, cardsData]) => {
     currentUser.setUserInfo(userData);
-    section = new Section(
+    const section = new Section(
       {
         items: cardsData,
-        renderer: (item) => {          
+        renderer: (item) => {
           section.addItem(createCard(item, "#photo-template"));
         },
       },
@@ -108,7 +106,6 @@ const profileValidation = new FormValidator(
 );
 profileValidation.enableValidation();
 
-
 const popupAvatar = new PopupWithForm(".change-avatar-popup", {
   callbackFormSubmit: (data) =>
     api.updateUserAvatar({ link: data[0] }).then((res) => {
@@ -126,8 +123,16 @@ avatarValidation.enableValidation();
 
 const popupCard = new PopupWithForm(".add-place-popup", {
   callbackFormSubmit: (data) =>
-    api.updateUserCard({ name: data[0], link: data[1] }).then((res) => {  
-      section.addItem(createCard(res, "#photo-template"))    
+    api.updateUserCard({ name: data[0], link: data[1] }).then((res) => {
+      const section = new Section(
+        {
+          items: res,
+          renderer: (item) => {
+            section.addItem(createCard(item, "#photo-template"));
+          },
+        },
+        ".photo-grid"
+      );
       popupCard.close();
     }),
 });
