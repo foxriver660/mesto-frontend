@@ -87,19 +87,46 @@ getInfo()
 
 const popupProfile = new PopupWithForm(".profile-popup", {
   callbackFormSubmit: (data) =>
-    api.updateUserProfile({ name: data[0], about: data[1] }).then((res) => {currentUser.setUserInfo(res); popupProfile.close()}),
+    api.updateUserProfile({ name: data[0], about: data[1] }).then((res) => {
+      currentUser.setUserInfo(res);
+      popupProfile.close();
+    }),
 });
-
-
-/* console.log(popupProfile); */
-
 profileBtn.addEventListener("click", () => {
   popupProfile.openPopup();
   popupProfile.setEventListener();
 });
 
-const profileValidation = new FormValidator(validationConfig, popupProfile.form) 
+const profileValidation = new FormValidator(
+  validationConfig,
+  popupProfile.form
+);
+profileValidation.enableValidation();
 
-profileValidation.enableValidation() 
+/* console.log(popupProfile); */
+const popupAvatar = new PopupWithForm(".change-avatar-popup", {
+  callbackFormSubmit: (data) =>
+    api.updateUserAvatar({ link: data[0] }).then((res) => {
+      currentUser.setUserInfo(res);
+      popupAvatar.close();
+    }),
+});
+changeAvatarBtn.addEventListener("click", () => {
+  popupAvatar.openPopup();
+  popupAvatar.setEventListener();
+});
+const avatarValidation = new FormValidator(validationConfig, popupAvatar.form);
+avatarValidation.enableValidation();
 
+const popupCard = new PopupWithForm(".add-place-popup", {
+  callbackFormSubmit: (data) =>
+    api.updateUserCard({ name: data[0], link: data[1] }).then((res) => {
+      console.log(res);
+      popupCard.close();
+    }),
+});
 
+addCardBtn.addEventListener("click", () => {
+  popupCard.openPopup();
+  popupCard.setEventListener();
+});
