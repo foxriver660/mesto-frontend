@@ -44,39 +44,44 @@ const currentUser = new UserInfo(
   ".profile__user-image"
 );
 
+const createCard = function (cardData, cardSelector) {
+  console.log(cardData)
+  const card = new Card(cardSelector, currentUser.userId, cardData, {
+    hadleDeleteCard: (cardElement, cardId) => {
+      api.deleteUserCard(cardId).then(() => {
+        card.removeCard(cardElement);
+      });
+    },
+
+    handleLikeCard: (isLiked, cardId) => {
+      api.setLike(isLiked, cardId).then((item) => {
+        card.toggleLike(item);
+      });
+    },
+
+    handleCardClick: ({ link, name }) => {
+      const popupWithImage = new PopupWithImage(".open-image-popup");
+      popupWithImage.setEventListener();
+      popupWithImage.openPopup({ link, name });
+    },
+  });
+  return card.generate();
+};
+
 function getInfo() {
   return Promise.all([api.getUserInfo(), api.getCards()]);
 }
 
+let section
+
 getInfo()
   .then(([userData, cardsData]) => {
     currentUser.setUserInfo(userData);
-    const section = new Section(
+    section = new Section(
       {
         items: cardsData,
-        renderer: (item) => {
-          const card = new Card("#photo-template", currentUser.userId, item, {
-            hadleDeleteCard: (cardElement, cardId) => {
-              api.deleteUserCard(cardId).then((item) => {
-                card.removeCard(cardElement);
-              });
-            },
-
-            handleLikeCard: (isLiked, cardId) => {
-              api.setLike(isLiked, cardId).then((item) => {
-                card.toggleLike(item);
-              });
-            },
-
-            handleCardClick: ({ link, name }) => {
-              const popupWithImage = new PopupWithImage(".open-image-popup");
-              popupWithImage.setEventListener();
-              popupWithImage.openPopup({ link, name });
-            },
-          });
-          //console.log(card);
-          const cardElement = card.generate();
-          section.addItem(cardElement);
+        renderer: (item) => {          
+          section.addItem(createCard(item, "#photo-template"));
         },
       },
       ".photo-grid"
@@ -103,7 +108,7 @@ const profileValidation = new FormValidator(
 );
 profileValidation.enableValidation();
 
-/* console.log(popupProfile); */
+
 const popupAvatar = new PopupWithForm(".change-avatar-popup", {
   callbackFormSubmit: (data) =>
     api.updateUserAvatar({ link: data[0] }).then((res) => {
@@ -115,45 +120,14 @@ changeAvatarBtn.addEventListener("click", () => {
   popupAvatar.openPopup();
   popupAvatar.setEventListener();
 });
+
 const avatarValidation = new FormValidator(validationConfig, popupAvatar.form);
 avatarValidation.enableValidation();
 
 const popupCard = new PopupWithForm(".add-place-popup", {
   callbackFormSubmit: (data) =>
-    api.updateUserCard({ name: data[0], link: data[1] }).then((res) => {
-      /* console.log([res]); */
-      
-      const section = new Section(
-        {
-          items: [res],
-          renderer: (item) => {
-            const card = new Card("#photo-template", currentUser.userId, item, {
-              hadleDeleteCard: (cardElement, cardId) => {
-                api.deleteUserCard(cardId).then((item) => {
-                  card.removeCard(cardElement);
-                });
-              },
-  
-              handleLikeCard: (isLiked, cardId) => {
-                api.setLike(isLiked, cardId).then((item) => {
-                  card.toggleLike(item);
-                });
-              },
-  
-              handleCardClick: ({ link, name }) => {
-                const popupWithImage = new PopupWithImage(".open-image-popup");
-                popupWithImage.setEventListener();
-                popupWithImage.openPopup({ link, name });
-              },
-            });
-            //console.log(card);
-            const cardElement = card.generate();
-            section.addItem(cardElement);
-          },
-        },
-        ".photo-grid"
-      );
-      section.renderItems();
+    api.updateUserCard({ name: data[0], link: data[1] }).then((res) => {  
+      section.addItem(createCard(res, "#photo-template"))    
       popupCard.close();
     }),
 });
