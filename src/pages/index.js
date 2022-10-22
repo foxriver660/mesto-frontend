@@ -38,14 +38,11 @@ import UserInfo from "../components/UserInfo.js";
 
 const api = new Api(apiConfig);
 
-
-
 const currentUser = new UserInfo(
   ".profile__user-name",
   ".profile__user-status",
   ".profile__user-image"
 );
-
 
 function getInfo() {
   return Promise.all([api.getUserInfo(), api.getCards()]);
@@ -58,30 +55,25 @@ getInfo()
       {
         items: cardsData,
         renderer: (item) => {
-          const card = new Card(
-            "#photo-template",
-            currentUser.userId,
-            item,
-            {
-              hadleDeleteCard: (cardElement, cardId) => {
-                api.deleteUserCard(cardId).then((item) => {
-                  card.removeCard(cardElement);
-                });
-              },
-  
-              handleLikeCard: (isLiked, cardId) => {
-                api.setLike(isLiked, cardId).then((item) => {
-                  card.toggleLike(item);
-                });
-              },
-  
-              handleCardClick: ({ link, name }) => {
-                const popupWithImage = new PopupWithImage(".open-image-popup");
-                popupWithImage.setEventListener();
-                popupWithImage.openPopup({ link, name });
-              },
-            }
-          );
+          const card = new Card("#photo-template", currentUser.userId, item, {
+            hadleDeleteCard: (cardElement, cardId) => {
+              api.deleteUserCard(cardId).then((item) => {
+                card.removeCard(cardElement);
+              });
+            },
+
+            handleLikeCard: (isLiked, cardId) => {
+              api.setLike(isLiked, cardId).then((item) => {
+                card.toggleLike(item);
+              });
+            },
+
+            handleCardClick: ({ link, name }) => {
+              const popupWithImage = new PopupWithImage(".open-image-popup");
+              popupWithImage.setEventListener();
+              popupWithImage.openPopup({ link, name });
+            },
+          });
           //console.log(card);
           const cardElement = card.generate();
           section.addItem(cardElement);
@@ -93,12 +85,15 @@ getInfo()
   })
   .catch((err) => console.log(err));
 
+const popupProfile = new PopupWithForm(".profile-popup", {
+  callbackFormSubmit: (data) =>
+    api.updateUserProfile({ name: data[0], about: data[1] }).then((res) => {currentUser.setUserInfo(res); popupProfile.close()}),
+});
 
-  const popupProfile = new PopupWithForm('.profile-popup', {
-    callbackFormSubmit: (data) => api.updateUserProfile(data)
-  })
-  console.log(popupProfile)
-profileBtn.addEventListener('click', () => {
-  popupProfile.openPopup()
-  popupProfile.setEventListener()
-})
+
+/* console.log(popupProfile); */
+
+profileBtn.addEventListener("click", () => {
+  popupProfile.openPopup();
+  popupProfile.setEventListener();
+});
