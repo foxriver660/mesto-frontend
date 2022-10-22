@@ -14,10 +14,7 @@ export default class FormValidator {
     this._submitButtonSelector = submitButtonSelector;
     this._inputErrorClass = inputErrorClass;
     this._errorClass = errorClass;
-    this._form = form;
-    this._errorType = this._form.querySelector(
-      `.${this._inputSelector.id}-error`
-    );
+    this._form = form;   
   }
 
   enableValidation() {
@@ -28,13 +25,14 @@ export default class FormValidator {
     const inputList = Array.from(
       this._form.querySelectorAll(this._inputSelector)
     );
+    
     const buttonElement = this._form.querySelector(this._submitButtonSelector);
     this._changebuttonState(inputList, buttonElement);
     // слушатели при открытии попапов
     inputList.forEach((inputType) => {
-      // слушатель инпутов
-      inputType.addEventListener("input", () => {
-        this._isValid();
+      // слушатель инпутов      
+      inputType.addEventListener("input", () => {        
+        this._isValid(inputType);
         this._changebuttonState(inputList, buttonElement);
       });
     });
@@ -54,29 +52,36 @@ export default class FormValidator {
     }
   }
 
-  _isValid() {
-    if (this._inputSelector.validity.patternMismatch) {
-      this._inputSelector.setCustomValidity(
-        this._inputSelector.dataset.errorMessage
+  _isValid(inputType) {
+    if (inputType.validity.patternMismatch) {
+      
+      inputType.setCustomValidity(
+        inputType.dataset.errorMessage
       );
     } else {
-      this._inputSelector.setCustomValidity("");
+      inputType.setCustomValidity("");
     }
-    if (!this._inputSelector.validity.valid) {
-      this._showInputError(this._inputSelector.validationMessage);
+    if (!inputType.validity.valid) {
+      this._showInputError(inputType, inputType.validationMessage);
     } else {
-      this._hideInputError();
+      this._hideInputError(inputType);
     }
   }
 
-  _showInputError = (errorMessage) => {
-    this._inputSelector.classList.add(this._inputErrorClass);
+  _showInputError = (inputType, errorMessage) => {    
+    this._errorType = this._form.querySelector(
+      `.${inputType.id}-error`
+    );    
+    inputType.classList.add(this._inputErrorClass);
     this._errorType.classList.add(this._errorClass);
     this._errorType.textContent = errorMessage;
   };
 
-  _hideInputError() {
-    this._inputSelector.classList.remove(this._inputErrorClass);
+  _hideInputError(inputType) {    
+    this._errorType = this._form.querySelector(
+      `.${inputType.id}-error`
+    );    
+    inputType.classList.remove(this._inputErrorClass);
     this._errorType.classList.remove(this._errorClass);
     this._errorType.textContent = "";
   }

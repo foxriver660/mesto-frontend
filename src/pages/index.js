@@ -97,3 +97,9 @@ profileBtn.addEventListener("click", () => {
   popupProfile.openPopup();
   popupProfile.setEventListener();
 });
+
+const profileValidation = new FormValidator(validationConfig, popupProfile.form) 
+
+profileValidation.enableValidation() 
+
+

@@ -23,7 +23,7 @@ export default class Api {
   }
 
   // !+++++++ЗАМЕНА ДАННЫХ О ПОЛЬЗОВАТЕЛЕ НА СЕРВЕРЕ
-  updateUserProfile(name, about) {
+  updateUserProfile({name, about}) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
@@ -35,7 +35,7 @@ export default class Api {
   }
 
   // !+++++++ЗАМЕНА АВАТАРА ПОЛЬЗОВАТЕЛЯ НА СЕРВЕРЕ
-  updateUserAvatar(link) {
+  updateUserAvatar({link}) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
@@ -46,7 +46,7 @@ export default class Api {
   }
 
   // !++++++++++++ЗАГРУЗКА КАРТОЧКИ ДОБАВЛЕННОЙ ПОЛЬЗОВАТЕЛЕМ
-  updateUserCard(name, link) {
+  updateUserCard({name, link}) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
