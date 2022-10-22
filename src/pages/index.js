@@ -44,8 +44,8 @@ const currentUser = new UserInfo(
   ".profile__user-image"
 );
 
-const createCard = function (cardData, cardSelector) {
-  console.log(cardData);
+const createCard = (cardData, cardSelector) => {
+  //console.log(cardData);
   const card = new Card(cardSelector, currentUser.userId, cardData, {
     hadleDeleteCard: (cardElement, cardId) => {
       api.deleteUserCard(cardId).then(() => {
@@ -72,10 +72,12 @@ function getInfo() {
   return Promise.all([api.getUserInfo(), api.getCards()]);
 }
 
+let section;
+
 getInfo()
   .then(([userData, cardsData]) => {
     currentUser.setUserInfo(userData);
-    const section = new Section(
+    section = new Section(
       {
         items: cardsData,
         renderer: (item) => {
@@ -124,15 +126,7 @@ avatarValidation.enableValidation();
 const popupCard = new PopupWithForm(".add-place-popup", {
   callbackFormSubmit: (data) =>
     api.updateUserCard({ name: data[0], link: data[1] }).then((res) => {
-      const section = new Section(
-        {
-          items: res,
-          renderer: (item) => {
-            section.addItem(createCard(item, "#photo-template"));
-          },
-        },
-        ".photo-grid"
-      );
+      section.addItem(createCard(res, "#photo-template"));
       popupCard.close();
     }),
 });
