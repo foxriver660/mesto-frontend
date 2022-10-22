@@ -38,42 +38,67 @@ import UserInfo from "../components/UserInfo.js";
 
 const api = new Api(apiConfig);
 
-api.getCards().then((dataCards) => {
-  //console.log(dataCards);
-  const section = new Section(
-    {
-      items: dataCards,
-      renderer: (item) => {
-        const card = new Card(
-          "#photo-template",
-          "cad8a03ca13a025c7531dcf2",
-          item,
-          {
-            hadleDeleteCard: (cardElement, cardId) => {
-              api.deleteUserCard(cardId).then((item) => {
-                card.removeCard(cardElement);
-              });
-            },
 
-            handleLikeCard: (isLiked, cardId) => {
-              api.setLike(isLiked, cardId).then((item) => {
-                card.toggleLike(item);
-              });
-            },
 
-            handleCardClick: ({ link, name }) => {
-              const popupWithImage = new PopupWithImage(".open-image-popup");
-              popupWithImage.setEventListener();
-              popupWithImage.openPopup({link, name});              
-            },
-          }
-        );
-        //console.log(card);
-        const cardElement = card.generate();
-        section.addItem(cardElement);
+const currentUser = new UserInfo(
+  ".profile__user-name",
+  ".profile__user-status",
+  ".profile__user-image"
+);
+
+
+function getInfo() {
+  return Promise.all([api.getUserInfo(), api.getCards()]);
+}
+
+getInfo()
+  .then(([userData, cardsData]) => {
+    currentUser.setUserInfo(userData);
+    const section = new Section(
+      {
+        items: cardsData,
+        renderer: (item) => {
+          const card = new Card(
+            "#photo-template",
+            currentUser.userId,
+            item,
+            {
+              hadleDeleteCard: (cardElement, cardId) => {
+                api.deleteUserCard(cardId).then((item) => {
+                  card.removeCard(cardElement);
+                });
+              },
+  
+              handleLikeCard: (isLiked, cardId) => {
+                api.setLike(isLiked, cardId).then((item) => {
+                  card.toggleLike(item);
+                });
+              },
+  
+              handleCardClick: ({ link, name }) => {
+                const popupWithImage = new PopupWithImage(".open-image-popup");
+                popupWithImage.setEventListener();
+                popupWithImage.openPopup({ link, name });
+              },
+            }
+          );
+          //console.log(card);
+          const cardElement = card.generate();
+          section.addItem(cardElement);
+        },
       },
-    },
-    ".photo-grid"
-  );
-  section.renderItems();
-});
+      ".photo-grid"
+    );
+    section.renderItems();
+  })
+  .catch((err) => console.log(err));
+
+
+  const popupProfile = new PopupWithForm('.profile-popup', {
+    callbackFormSubmit: (data) => api.updateUserProfile(data)
+  })
+  console.log(popupProfile)
+profileBtn.addEventListener('click', () => {
+  popupProfile.openPopup()
+  popupProfile.setEventListener()
+})

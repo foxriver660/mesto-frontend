@@ -23,7 +23,7 @@ export default class Api {
   }
 
   // !+++++++ЗАМЕНА ДАННЫХ О ПОЛЬЗОВАТЕЛЕ НА СЕРВЕРЕ
-  updateUserProfile(name, about) {
+  updateUserProfile({name, about}) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
