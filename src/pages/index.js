@@ -142,6 +142,7 @@ popupAvatar.setEventListener();
 popupCard.setEventListener();
 
 profileBtn.addEventListener("click", () => {
+  popupProfile.setInputValues(currentUser.getUserInfo())
   popupProfile.openPopup();  
 });
 
