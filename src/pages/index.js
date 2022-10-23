@@ -99,16 +99,11 @@ const popupProfile = new PopupWithForm(".profile-popup", {
       })
       .catch((err) => console.log(err)),
 });
-profileBtn.addEventListener("click", () => {
-  popupProfile.openPopup();
-  popupProfile.setEventListener();
-});
 
 const profileValidation = new FormValidator(
   validationConfig,
   popupProfile.form
 );
-profileValidation.enableValidation();
 
 const popupAvatar = new PopupWithForm(".change-avatar-popup", {
   callbackFormSubmit: (data) =>
@@ -122,7 +117,6 @@ const popupAvatar = new PopupWithForm(".change-avatar-popup", {
 });
 
 const avatarValidation = new FormValidator(validationConfig, popupAvatar.form);
-avatarValidation.enableValidation();
 
 const popupCard = new PopupWithForm(".add-place-popup", {
   callbackFormSubmit: (data) =>
@@ -135,9 +129,21 @@ const popupCard = new PopupWithForm(".add-place-popup", {
       .catch((err) => console.log(err)),
 });
 
-popupAvatar.setEventListener();
+const cardValidation = new FormValidator(
+  validationConfig,
+  popupCard.form
+);
 
+profileValidation.enableValidation();
+avatarValidation.enableValidation();
+cardValidation.enableValidation();
+popupProfile.setEventListener();
+popupAvatar.setEventListener();
 popupCard.setEventListener();
+
+profileBtn.addEventListener("click", () => {
+  popupProfile.openPopup();  
+});
 
 changeAvatarBtn.addEventListener("click", () => {
   popupAvatar.openPopup();
