@@ -14,7 +14,18 @@ export default class FormValidator {
     this._submitButtonSelector = submitButtonSelector;
     this._inputErrorClass = inputErrorClass;
     this._errorClass = errorClass;
-    this._form = form;   
+    this._form = form;
+  }
+
+  resetValid() {
+    const inputList = Array.from(
+      this._form.querySelectorAll(this._inputSelector)
+    );
+
+    const buttonElement = this._form.querySelector(this._submitButtonSelector);
+
+    inputList.forEach((inputType) => this._hideInputError(inputType));
+    this._changebuttonState(inputList, buttonElement);
   }
 
   enableValidation() {
@@ -25,13 +36,13 @@ export default class FormValidator {
     const inputList = Array.from(
       this._form.querySelectorAll(this._inputSelector)
     );
-    
+
     const buttonElement = this._form.querySelector(this._submitButtonSelector);
     this._changebuttonState(inputList, buttonElement);
     // слушатели при открытии попапов
     inputList.forEach((inputType) => {
-      // слушатель инпутов      
-      inputType.addEventListener("input", () => {        
+      // слушатель инпутов
+      inputType.addEventListener("input", () => {
         this._isValid(inputType);
         this._changebuttonState(inputList, buttonElement);
       });
@@ -54,10 +65,7 @@ export default class FormValidator {
 
   _isValid(inputType) {
     if (inputType.validity.patternMismatch) {
-      
-      inputType.setCustomValidity(
-        inputType.dataset.errorMessage
-      );
+      inputType.setCustomValidity(inputType.dataset.errorMessage);
     } else {
       inputType.setCustomValidity("");
     }
@@ -68,19 +76,15 @@ export default class FormValidator {
     }
   }
 
-  _showInputError = (inputType, errorMessage) => {    
-    this._errorType = this._form.querySelector(
-      `.${inputType.id}-error`
-    );    
+  _showInputError = (inputType, errorMessage) => {
+    this._errorType = this._form.querySelector(`.${inputType.id}-error`);
     inputType.classList.add(this._inputErrorClass);
     this._errorType.classList.add(this._errorClass);
     this._errorType.textContent = errorMessage;
   };
 
-  _hideInputError(inputType) {    
-    this._errorType = this._form.querySelector(
-      `.${inputType.id}-error`
-    );    
+  _hideInputError(inputType) {
+    this._errorType = this._form.querySelector(`.${inputType.id}-error`);
     inputType.classList.remove(this._inputErrorClass);
     this._errorType.classList.remove(this._errorClass);
     this._errorType.textContent = "";

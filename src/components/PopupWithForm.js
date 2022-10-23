@@ -13,7 +13,7 @@ export default class PopupWithForm extends Popup {
   }
 
   setInputValues(value) {
-    for (let i = 0; i <= this._inputList.length - 1; i++) {
+    for (let i = 0; i < this._inputList.length; i++) {
       this._inputList[i].value = value[i]
     }
   }
