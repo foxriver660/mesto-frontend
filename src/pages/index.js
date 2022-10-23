@@ -97,7 +97,10 @@ const popupProfile = new PopupWithForm(".profile-popup", {
         currentUser.setUserInfo(res);
         popupProfile.close();
       })
-      .catch((err) => console.log(err)),
+      .catch((err) => console.log(err))
+      .finally(() => {
+        popupProfile.renderLoading(false);
+      }),
 });
 
 const profileValidation = new FormValidator(
@@ -113,7 +116,10 @@ const popupAvatar = new PopupWithForm(".change-avatar-popup", {
         currentUser.setUserInfo(res);
         popupAvatar.close();
       })
-      .catch((err) => console.log(err)),
+      .catch((err) => console.log(err))
+      .finally(() => {
+        popupAvatar.renderLoading(false);
+      }),
 });
 
 const avatarValidation = new FormValidator(validationConfig, popupAvatar.form);
@@ -126,7 +132,10 @@ const popupCard = new PopupWithForm(".add-place-popup", {
         section.addItem(createCard(res, "#photo-template"));
         popupCard.close();
       })
-      .catch((err) => console.log(err)),
+      .catch((err) => console.log(err))
+      .finally(() => {
+        popupCard.renderLoading(false);
+      }),
 });
 
 const cardValidation = new FormValidator(validationConfig, popupCard.form);
