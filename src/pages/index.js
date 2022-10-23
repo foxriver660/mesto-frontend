@@ -44,8 +44,7 @@ const currentUser = new UserInfo(
   ".profile__user-image"
 );
 
-const createCard = (cardData, cardSelector) => {
-  //console.log(cardData);
+const createCard = (cardData, cardSelector) => {  
   const card = new Card(cardSelector, currentUser.userId, cardData, {
     hadleDeleteCard: (cardElement, cardId) => {
       api.deleteUserCard(cardId).then(() => {
@@ -121,10 +120,6 @@ const popupAvatar = new PopupWithForm(".change-avatar-popup", {
       })
       .catch((err) => console.log(err)),
 });
-changeAvatarBtn.addEventListener("click", () => {
-  popupAvatar.openPopup();
-  popupAvatar.setEventListener();
-});
 
 const avatarValidation = new FormValidator(validationConfig, popupAvatar.form);
 avatarValidation.enableValidation();
@@ -140,7 +135,14 @@ const popupCard = new PopupWithForm(".add-place-popup", {
       .catch((err) => console.log(err)),
 });
 
+popupAvatar.setEventListener();
+
+popupCard.setEventListener();
+
+changeAvatarBtn.addEventListener("click", () => {
+  popupAvatar.openPopup();
+});
+
 addCardBtn.addEventListener("click", () => {
   popupCard.openPopup();
-  popupCard.setEventListener();
 });
