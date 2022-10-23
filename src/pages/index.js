@@ -146,9 +146,11 @@ profileBtn.addEventListener("click", () => {
 });
 
 changeAvatarBtn.addEventListener("click", () => {
+  popupAvatar.form.reset()
   popupAvatar.openPopup();
 });
 
 addCardBtn.addEventListener("click", () => {
+  popupCard.form.reset()
   popupCard.openPopup();
 });
