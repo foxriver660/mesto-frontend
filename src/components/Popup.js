@@ -2,21 +2,22 @@ export default class Popup {
   constructor(popupSelector) {
     this._popupSelector = popupSelector;
     this._popup = document.querySelector(this._popupSelector);
+    this._handleEscClose = this._handleEscClose.bind(this)
   }
 
   close() {
     this._popup.classList.remove("popup_opened");
-    this._removeEventListener()
+    document.removeEventListener("keydown", this._handleEscClose);
   }
 
   open() {
     this._popup.classList.add("popup_opened");
+    document.addEventListener("keydown", this._handleEscClose);
   }
 
   _handleEscClose(evt) {
-    if (this._popup.classList.contains("popup_opened") && evt.key === "Escape") {      
-      this.close();
-      console.log(evt.key)
+    if (evt.key === "Escape") {      
+      this.close();      
     }
   }
 
@@ -29,15 +30,7 @@ export default class Popup {
     }
   }
 
-  _removeEventListener(){
-    this._popup.removeEventListener("mousedown", (evt) => this._handleClose(evt));
-    // ДОБАВЛЕНИЕ СЛУШАТЕЛЯ НА ESC
-    document.removeEventListener("keydown", (evt) => this._handleEscClose(evt));
-  }
-
-  setEventListener() {
-    this._popup.addEventListener("mousedown", (evt) => this._handleClose(evt));
-    // ДОБАВЛЕНИЕ СЛУШАТЕЛЯ НА ESC
-    document.addEventListener("keydown", (evt) => this._handleEscClose(evt));
+    setEventListener() {
+    this._popup.addEventListener("mousedown", (evt) => this._handleClose(evt));   
   }
 }

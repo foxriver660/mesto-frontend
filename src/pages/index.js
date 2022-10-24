@@ -25,19 +25,24 @@ const currentUser = new UserInfo(
 const createCard = (cardData, cardSelector) => {
   const card = new Card(cardSelector, currentUser.userId, cardData, {
     hadleDeleteCard: (cardElement, cardId) => {
-      api.deleteUserCard(cardId).then(() => {
-        card.removeCard(cardElement);
-      }).catch((err) => console.log(err));
+      api
+        .deleteUserCard(cardId)
+        .then(() => {
+          card.removeCard(cardElement);
+        })
+        .catch((err) => console.log(err));
     },
 
     handleLikeCard: (isLiked, cardId) => {
-      api.setLike(isLiked, cardId).then((item) => {
-        card.toggleLike(item);
-      }).catch((err) => console.log(err));;
+      api
+        .setLike(isLiked, cardId)
+        .then((item) => {
+          card.toggleLike(item);
+        })
+        .catch((err) => console.log(err));
     },
 
     handleCardClick: ({ link, name }) => {
-      
       popupWithImage.open({ link, name });
     },
   });
@@ -66,14 +71,12 @@ getInfo()
   })
   .catch((err) => console.log(err));
 
-
 const popupWithImage = new PopupWithImage(".open-image-popup");
-
 
 const popupProfile = new PopupWithForm(".profile-popup", {
   callbackFormSubmit: (data) =>
     api
-      .updateUserProfile({ name: data[0], about: data[1] })
+      .updateUserProfile(data)
       .then((res) => {
         currentUser.setUserInfo(res);
         popupProfile.close();
@@ -92,7 +95,7 @@ const profileValidation = new FormValidator(
 const popupAvatar = new PopupWithForm(".change-avatar-popup", {
   callbackFormSubmit: (data) =>
     api
-      .updateUserAvatar({ link: data[0] })
+      .updateUserAvatar(data)
       .then((res) => {
         currentUser.setUserInfo(res);
         popupAvatar.close();
@@ -108,7 +111,7 @@ const avatarValidation = new FormValidator(validationConfig, popupAvatar.form);
 const popupCard = new PopupWithForm(".add-place-popup", {
   callbackFormSubmit: (data) =>
     api
-      .updateUserCard({ name: data[0], link: data[1] })
+      .updateUserCard(data)
       .then((res) => {
         section.addItem(createCard(res, "#photo-template"));
         popupCard.close();
@@ -133,7 +136,7 @@ popupWithImage.setEventListener();
 profileBtn.addEventListener("click", () => {
   popupProfile.setInputValues(currentUser.getUserInfo());
   profileValidation.resetValidation();
-  
+
   popupProfile.open();
 });
 
@@ -144,6 +147,6 @@ changeAvatarBtn.addEventListener("click", () => {
 
 addCardBtn.addEventListener("click", () => {
   cardValidation.resetValidation();
-  
+
   popupCard.open();
 });
