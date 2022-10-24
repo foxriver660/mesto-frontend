@@ -1,8 +1,8 @@
 import "../index.css";
-import {  
-  changeAvatarBtn,  
+import {
+  changeAvatarBtn,
   profileBtn,
-  addCardBtn,  
+  addCardBtn,
   apiConfig,
   validationConfig,
 } from "../utils/variables.js";
@@ -39,7 +39,7 @@ const createCard = (cardData, cardSelector) => {
     handleCardClick: ({ link, name }) => {
       const popupWithImage = new PopupWithImage(".open-image-popup");
       popupWithImage.setEventListener();
-      popupWithImage.openPopup({ link, name });
+      popupWithImage.open({ link, name });
     },
   });
   return card.generate();
@@ -121,24 +121,25 @@ const cardValidation = new FormValidator(validationConfig, popupCard.form);
 profileValidation.enableValidation();
 avatarValidation.enableValidation();
 cardValidation.enableValidation();
+
+popupCard.setEventListener();
 popupProfile.setEventListener();
 popupAvatar.setEventListener();
-popupCard.setEventListener();
 
 profileBtn.addEventListener("click", () => {
   popupProfile.setInputValues(currentUser.getUserInfo());
-  profileValidation.resetValid();
-  popupProfile.openPopup();
+  profileValidation.resetValidation();
+  
+  popupProfile.open();
 });
 
 changeAvatarBtn.addEventListener("click", () => {
-  popupAvatar.form.reset();
-  avatarValidation.resetValid();
-  popupAvatar.openPopup();
+  avatarValidation.resetValidation();
+  popupAvatar.open();
 });
 
 addCardBtn.addEventListener("click", () => {
-  popupCard.form.reset();
-  cardValidation.resetValid();
-  popupCard.openPopup();
+  cardValidation.resetValidation();
+  
+  popupCard.open();
 });

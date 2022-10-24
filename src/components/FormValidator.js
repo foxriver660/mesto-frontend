@@ -21,7 +21,7 @@ export default class FormValidator {
     this._buttonElement = this._form.querySelector(this._submitButtonSelector);
   }
 
-  resetValid() {
+  resetValidation() {
     this._inputList.forEach((inputType) => this._hideInputError(inputType));
     this._changebuttonState();
   }
