@@ -15,17 +15,15 @@ export default class FormValidator {
     this._inputErrorClass = inputErrorClass;
     this._errorClass = errorClass;
     this._form = form;
+    this._inputList = Array.from(
+      this._form.querySelectorAll(this._inputSelector)
+    );
+    this._buttonElement = this._form.querySelector(this._submitButtonSelector);
   }
 
   resetValid() {
-    const inputList = Array.from(
-      this._form.querySelectorAll(this._inputSelector)
-    );
-
-    const buttonElement = this._form.querySelector(this._submitButtonSelector);
-
-    inputList.forEach((inputType) => this._hideInputError(inputType));
-    this._changebuttonState(inputList, buttonElement);
+    this._inputList.forEach((inputType) => this._hideInputError(inputType));
+    this._changebuttonState();
   }
 
   enableValidation() {
@@ -33,33 +31,28 @@ export default class FormValidator {
   }
 
   _setEventListeners() {
-    const inputList = Array.from(
-      this._form.querySelectorAll(this._inputSelector)
-    );
-
-    const buttonElement = this._form.querySelector(this._submitButtonSelector);
-    this._changebuttonState(inputList, buttonElement);
+     this._changebuttonState();
     // слушатели при открытии попапов
-    inputList.forEach((inputType) => {
+    this._inputList.forEach((inputType) => {
       // слушатель инпутов
       inputType.addEventListener("input", () => {
         this._isValid(inputType);
-        this._changebuttonState(inputList, buttonElement);
+        this._changebuttonState();
       });
     });
   }
 
-  _hasInvalidInput(inputList) {
-    return inputList.some((inputType) => {
+  _hasInvalidInput() {
+    return this._inputList.some((inputType) => {
       return !inputType.validity.valid;
     });
   }
 
-  _changebuttonState(inputList, buttonElement) {
-    if (this._hasInvalidInput(inputList)) {
-      buttonElement.setAttribute("disabled", "disabled");
+  _changebuttonState() {
+    if (this._hasInvalidInput()) {
+      this._buttonElement.setAttribute("disabled", "disabled");
     } else {
-      buttonElement.removeAttribute("disabled");
+      this._buttonElement.removeAttribute("disabled");
     }
   }
 
