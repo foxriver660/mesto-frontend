@@ -4,7 +4,7 @@ export default class Api {
     this._headers = headers;
   }
   // ПРОВЕРКА СТАТУСА ОТВЕТА ОТ СЕРВЕРА
-  _responseServer(res) {
+  _checkResponse(res) {
     return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
   }
 
@@ -12,14 +12,14 @@ export default class Api {
   getCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
-    }).then(this._responseServer);
+    }).then(this._checkResponse);
   }
 
   // !+++++++++ЗАПРОС ДАННЫХ О ПОЛЬЗОВАТЕЛЕ С СЕРВЕРА И ЗАГРУЗКА В ДОМ
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-    }).then(this._responseServer);
+    }).then(this._checkResponse);
   }
 
   // !+++++++ЗАМЕНА ДАННЫХ О ПОЛЬЗОВАТЕЛЕ НА СЕРВЕРЕ
@@ -31,7 +31,7 @@ export default class Api {
         name: name,
         about: about,
       }),
-    }).then(this._responseServer);
+    }).then(this._checkResponse);
   }
 
   // !+++++++ЗАМЕНА АВАТАРА ПОЛЬЗОВАТЕЛЯ НА СЕРВЕРЕ
@@ -42,7 +42,7 @@ export default class Api {
       body: JSON.stringify({
         avatar: link,
       }),
-    }).then(this._responseServer);
+    }).then(this._checkResponse);
   }
 
   // !++++++++++++ЗАГРУЗКА КАРТОЧКИ ДОБАВЛЕННОЙ ПОЛЬЗОВАТЕЛЕМ
@@ -54,7 +54,7 @@ export default class Api {
         name: name,
         link: link,
       }),
-    }).then(this._responseServer);
+    }).then(this._checkResponse);
   }
 
   // !+++++++++++++++++УДАЛЕНИЕ КАРТОЧКИ С СЕРВЕРА
@@ -65,7 +65,7 @@ export default class Api {
       body: JSON.stringify({
         _id: cardId,
       }),
-    }).then(this._responseServer);
+    }).then(this._checkResponse);
   }
 
   // !+++++++++++++++++УСТАНОВКА ЛАЙКА
@@ -73,6 +73,6 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: isLiked ? "DELETE" : "PUT",
       headers: this._headers,
-    }).then(this._responseServer);
+    }).then(this._checkResponse);
   }
 }

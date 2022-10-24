@@ -3,7 +3,7 @@ export default class Card {
     selector,
     userId, //Подумать над sessionStorage
     data,
-    { hadleDeleteCard, handleLikeCard, handleCardClick  }
+    { hadleDeleteCard, handleLikeCard, handleCardClick }
   ) {
     this._selector = selector;
     this._cardName = data.name;
@@ -15,6 +15,14 @@ export default class Card {
     this._hadleDeleteCard = hadleDeleteCard;
     this._handleLikeCard = handleLikeCard;
     this._handleCardClick = handleCardClick;
+    this._element = this._getElement();
+    this._likeBtn = this._element.querySelector(".photo-grid__like-button");
+    this._deleteBtn = this._element.querySelector(".photo-grid__delete-button");
+    this._likeCounter = this._element.querySelector(".photo-grid__like-count");
+    this._cardImage = this._element.querySelector(".photo-grid__image");
+    this._cardDescription = this._element.querySelector(
+      ".photo-grid__place-name"
+    );
   }
 
   _getElement() {
@@ -35,7 +43,7 @@ export default class Card {
       : this._likeBtn.classList.remove("photo-grid__like-button_active");
   }
 
-  removeCard(item) {    
+  removeCard(item) {
     item.remove();
   }
 
@@ -65,20 +73,9 @@ export default class Card {
   }
 
   generate() {
-    this._element = this._getElement();
+    this._cardDescription.textContent = this._cardName;
 
-    this._likeBtn = this._element.querySelector(".photo-grid__like-button");
-
-    this._deleteBtn = this._element.querySelector(".photo-grid__delete-button");
-
-    this._likeCounter = this._element.querySelector(".photo-grid__like-count");
-
-    this._cardImage = this._element.querySelector(".photo-grid__image");
-
-    this._element.querySelector(".photo-grid__place-name").textContent =
-      this._cardName;
-
-    this._element.querySelector(".photo-grid__image").alt = this._cardName;
+    this._cardImage.alt = this._cardName;
 
     this._cardImage.src = this._imageLink;
 
