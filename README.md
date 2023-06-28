@@ -1,27 +1,15 @@
-## #Учебный проект №3: Mesto
+# Welcome to ****[Mesto project](https://foxriver660.github.io/mesto-project/)****!
 
-Сайт доступен по ссылке: **[https://foxriver660.github.io/mesto-project/](https://foxriver660.github.io/mesto-project/)**
+  
+ * All data is loaded and stored on the server.
+*   Added functionality: the ability to change profile data by the user, add new places with the name of the place and a link to the image, default loading of 6 basic cards using JS, a set of functionality is available for each card: delete and like.
+* The code is written in the style of **object-oriented programming (OOP)**.
+* Configured custom live form validation.
+* Team development.
 
-В ходе данного учебного проекта подготовлен веб-сайт с отзывчиво-адаптивной функциональностью.
 
-- все данные загружаются и хранятся на сервере
-- реализовано плавное открытие и закрытие модальных окон
-- добавлена функциональность: возможность менять данные профиля пользователем, добавлять новые места с названием места и ссылкой на изображение, дефолтная загрузка базовых 6 карточек с помощью **JS**, каждой карточки доступен набор функционала: удаление и лайк.
-- CSS файлы разбитые по соответвующим блокам загружаются на файл **_index.css_** при помощи директивы **_@import_**.
-- локано использованы шрифты семейства **"inter"**
-- веб-сайт состоит из 4 семантических секций, каждая из которых является независимым блоком, отдельно реализовано модульное окно.
-- реализована адаптация веб-страницы в соответствии с дизайн-макетом.
+# Used technologies
 
----
-
-Использованные технологии:
-
-- код написан в стиле объектно-ориентированного програмирования(ООП)
-- проект скомпилирован с помощью Webpack, весь код минифицирован и транспилирован
-- настроена кастомная лайв-валидация форм
-- для реализации вышеуказанной функциональности использовался чистый **JavaScript**
-- файловая структура построена в соотвествии с **_методологией БЭМ_** с применением схемы организации файловой структуры проекта **_Nested_**.
-- использована технология **_CSS Flexboх_** и **_CSS Grid_** для создания гибких макетов. С помощью данных технологий созданный веб-сайт обладает отзывчиво-адаптивным дизайном.
-- все имеющиеся на сайте ссылки интерактивны и анимированы с помощью **_transition_**.
-- все изображения из дизайн-макета выгружены в формате (JPEG) и сжаты с использованием стороненного ресурса https://tinypng.com/, векторые изображения (SVG) с использованием https://jakearchibald.github.io
-- в секции **Popup** реализовано фиксированное позиционирование.
+  
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)
