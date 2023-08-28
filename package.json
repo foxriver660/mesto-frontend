@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "develop": "webpack --mode development",
-    "build": "webpack --mode production",
+    "build": "webpack --mode production && scp -Cr ${PWD}/dist/* foxriver@158.160.116.212:/home/foxriver/mesto-frontend",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "dev": "webpack serve"
