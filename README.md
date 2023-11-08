@@ -1,4 +1,4 @@
-# Welcome to ****[Mesto project](https://foxriver660.github.io/mesto-project-frontend/)****!
+# Welcome to ****[Mesto frontend](https://foxriver660.github.io/mesto-frontend/)****!
 
   
  * All data is loaded and stored on the server.
